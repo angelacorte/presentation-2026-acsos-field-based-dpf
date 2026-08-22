@@ -1,14 +1,14 @@
 <!DOCTYPE html><html lang="en"><head>
 	<meta name="generator" content="Hugo 0.165.0">
     <meta charset="utf-8">
-<title>Flexible Distributed Particle Filtering for the Internet of Things via Aggregate Computing</title>
-<meta name="description" content="DCOSS-IoT 2026 presentation">
+<title>Multi-Target Tracking via Field-Based Distributed Particle Filtering</title>
+<meta name="description" content="ACSOS 2026 presentation">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/presentation-2026-dcoss-ac-dpf/reveal-js/dist/reset.css">
-<link rel="stylesheet" href="/presentation-2026-dcoss-ac-dpf/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/presentation-2026-dcoss-ac-dpf/css/custom-theme.min.1ca2f0441969374ae333b0d3d018ee2d194c0ed35ff705e38e5e817b45652563.css" id="theme"><link rel="stylesheet" href="/presentation-2026-dcoss-ac-dpf/highlight-js/solarized-dark.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/css/custom-theme.min.87ee940adc570f9f5fffd8cf833bc33a530aa32def4d084c4455090261205a7a.css" id="theme"><link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/highlight-js/solarized-dark.min.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
@@ -25,7 +25,7 @@
       <div class="slides">
   
 
-    <section><h1 id="flexible-distributed-particle-filtering-for-the-internet-of-things-via-aggregate-computing">Flexible Distributed Particle Filtering for the Internet of Things via Aggregate Computing</h1>
+    <section><h1 id="multi-target-tracking-via-field-based-distributed-particle-filtering">Multi-Target Tracking via Field-Based Distributed Particle Filtering</h1>
 
 
 <div style="margin-top: 4rem;"></div>
@@ -33,7 +33,6 @@
 <a href="mailto:davide.domini@unibo.it">Davide Domini</a>,
 <a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto</a>,
 <a href="mailto:roby.casadei@unibo.it">Roberto Casadei</a>,
-<a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a>,
 and
 <a href="mailto:mirko.viroli@unibo.it">Mirko Viroli</a></p>
 
@@ -46,25 +45,14 @@ Alma Mater Studiorum – University of Bologna - Cesena, Italy</em></span></p>
 </div>
 </section><section>
 <h1 id="motivation">Motivation</h1>
-<div class="motivation-layout">
-  <div class="motivation-copy">
-    <p>Many cyber-physical systems must estimate a <strong>hidden dynamical state</strong> from distributed, noisy observations.</p>
-    <div class="pattern-line is-left">
-      <span>target tracking</span>
-      <span>environmental monitoring</span>
-      <span>mobility and traffic</span>
-      <span>smart-city sensing</span>
-    </div>
-    <div class="constraint-line">
-      <span>Constraint</span>
-      <p>No single device directly observes the full state.</p>
-    </div>
-  </div>
-  <div class="motivation-visual">
-    <img src="./images/Gemini_Generated_Image_y0tp7fy0tp7fy0tp.jpg">
-    <p><strong>Tracking intuition:</strong> sensors observe fragments of evidence; the system reconstructs the target trajectory.</p>
-  </div>
-</div>
+<p>Cyber-physical systems applications, such as target tracking, environmental monitoring, mobility and traffic, or smart city sensing, must estimate a <strong>hidden dynamical state</strong> from distributed, noisy observations.</p><p></p>
+<p><span>Constraints:</span>
+No single device directly observes the full state.
+Devices can enter into and leave the network.
+The network topology may change over time.
+Cannot rely on a single fusion center due to bandwidth, latency, energy, and robustness constraints.</p>
+<img src="./images/Gemini_Generated_Image_y0tp7fy0tp7fy0tp.jpg">
+<p><strong>Tracking intuition:</strong> sensors observe fragments of evidence; the system reconstructs the target trajectory.</p><p></p>
 </section><section>
 <h1 id="from-observations-to-a-posterior-estimate">From Observations to a Posterior Estimate</h1>
 <div class="posterior-layout" style="align-items: flex-start;">
@@ -642,28 +630,28 @@ Alma Mater Studiorum – University of Bologna - Cesena, Italy</em></span></p>
       
 
     </div>
-<script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-hugo/object-assign.js"></script>
+<script type="text/javascript" src="/presentation-2026-acsos-field-based-dpf/reveal-hugo/object-assign.js"></script>
 
-<a href="/presentation-2026-dcoss-ac-dpf/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
+<a href="/presentation-2026-acsos-field-based-dpf/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
 
 <script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"solarized-dark","history":true,"mermaid":[{}],"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
 <script type="application/json" id="reveal-hugo-page-params">null</script>
 
-<script src="/presentation-2026-dcoss-ac-dpf/reveal-js/dist/reveal.js"></script>
+<script src="/presentation-2026-acsos-field-based-dpf/reveal-js/dist/reveal.js"></script>
 
 
   
   
-  <script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-js/plugin/markdown/markdown.js"></script>
+  <script type="text/javascript" src="/presentation-2026-acsos-field-based-dpf/reveal-js/plugin/markdown/markdown.js"></script>
   
-  <script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-js/plugin/highlight/highlight.js"></script>
+  <script type="text/javascript" src="/presentation-2026-acsos-field-based-dpf/reveal-js/plugin/highlight/highlight.js"></script>
   
-  <script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-js/plugin/zoom/zoom.js"></script>
+  <script type="text/javascript" src="/presentation-2026-acsos-field-based-dpf/reveal-js/plugin/zoom/zoom.js"></script>
   
-  <script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-js/plugin/notes/notes.js"></script>
+  <script type="text/javascript" src="/presentation-2026-acsos-field-based-dpf/reveal-js/plugin/notes/notes.js"></script>
   
   
-  <script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-js/plugin/notes/notes.js"></script>
+  <script type="text/javascript" src="/presentation-2026-acsos-field-based-dpf/reveal-js/plugin/notes/notes.js"></script>
 
 
 
