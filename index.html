@@ -1,0 +1,776 @@
+<!DOCTYPE html><html lang="en"><head>
+	<meta name="generator" content="Hugo 0.165.0">
+    <meta charset="utf-8">
+<title>Flexible Distributed Particle Filtering for the Internet of Things via Aggregate Computing</title>
+<meta name="description" content="DCOSS-IoT 2026 presentation">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/presentation-2026-dcoss-ac-dpf/reveal-js/dist/reset.css">
+<link rel="stylesheet" href="/presentation-2026-dcoss-ac-dpf/reveal-js/dist/reveal.css">
+  <link rel="stylesheet" href="/presentation-2026-dcoss-ac-dpf/css/custom-theme.min.1ca2f0441969374ae333b0d3d018ee2d194c0ed35ff705e38e5e817b45652563.css" id="theme"><link rel="stylesheet" href="/presentation-2026-dcoss-ac-dpf/highlight-js/solarized-dark.min.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/gh/DanySK/css-blur-animation/blur.css" rel="stylesheet" crossorigin="anonymous">
+
+<script src="https://kit.fontawesome.com/81ac037be0.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+
+  </head>
+  <body>
+    
+    <div class="reveal">
+      <div class="slides">
+  
+
+    <section><h1 id="flexible-distributed-particle-filtering-for-the-internet-of-things-via-aggregate-computing">Flexible Distributed Particle Filtering for the Internet of Things via Aggregate Computing</h1>
+
+
+<div style="margin-top: 4rem;"></div>
+<p><a href="mailto:angela.cortecchia@unibo.it"><strong><span class="deck-title-accent">Angela Cortecchia</span></strong></a>,
+<a href="mailto:davide.domini@unibo.it">Davide Domini</a>,
+<a href="mailto:giovanni.ciatto@unibo.it">Giovanni Ciatto</a>,
+<a href="mailto:roby.casadei@unibo.it">Roberto Casadei</a>,
+<a href="mailto:danilo.pianini@unibo.it">Danilo Pianini</a>,
+and
+<a href="mailto:mirko.viroli@unibo.it">Mirko Viroli</a></p>
+
+
+<div style="margin-top: 4rem;"></div>
+<p><span class="deck-affiliation"><em>Department of Computer Science and Engineering (DISI)<br>
+Alma Mater Studiorum – University of Bologna - Cesena, Italy</em></span></p>
+<div class="hero-logo">
+  <img src="./images/DIP INFORMATICA-SCIENZA E INGEGNERIA_DISI_EN.svg">
+</div>
+</section><section>
+<h1 id="motivation">Motivation</h1>
+<div class="motivation-layout">
+  <div class="motivation-copy">
+    <p>Many cyber-physical systems must estimate a <strong>hidden dynamical state</strong> from distributed, noisy observations.</p>
+    <div class="pattern-line is-left">
+      <span>target tracking</span>
+      <span>environmental monitoring</span>
+      <span>mobility and traffic</span>
+      <span>smart-city sensing</span>
+    </div>
+    <div class="constraint-line">
+      <span>Constraint</span>
+      <p>No single device directly observes the full state.</p>
+    </div>
+  </div>
+  <div class="motivation-visual">
+    <img src="./images/Gemini_Generated_Image_y0tp7fy0tp7fy0tp.jpg">
+    <p><strong>Tracking intuition:</strong> sensors observe fragments of evidence; the system reconstructs the target trajectory.</p>
+  </div>
+</div>
+</section><section>
+<h1 id="from-observations-to-a-posterior-estimate">From Observations to a Posterior Estimate</h1>
+<div class="posterior-layout" style="align-items: flex-start;">
+  <div class="posterior-copy" style="margin-top: 0; padding-top: 0;">
+    <p>Reconstruct a latent state over time from partial and noisy observations.</p>
+    <div class="equation-line">
+      <span>hidden state</span>
+      <strong>$$x_t$$</strong>
+    </div>
+    <div class="equation-line">
+      <span>observations</span>
+      <strong>$$y_{1:t}$$</strong>
+    </div>
+    <div class="equation-line is-focus">
+      <span>filtering objective</span>
+      <strong>$$p(x_t \mid y_{1:t})$$</strong>
+    </div>
+  </div>
+  <div class="posterior-side" style="margin-top: 0; padding-top: 0;">
+    <div class="posterior-flow">
+      <div class="posterior-flow-step">
+      <strong>Noisy local sensing</strong>
+      partial measurements
+      </div>
+      <div class="posterior-flow-arrow">→</div>
+      <div class="posterior-flow-step">
+      <strong>Posterior state estimate</strong>
+      uncertainty remains explicit
+      </div>
+    </div>
+    <p class="side-statement" style="margin-top: 1.6rem; margin-bottom: 1.8rem;">Classical linear estimators are not enough when dynamics are <strong>non-linear</strong> and uncertainty is <strong>non-Gaussian</strong>.</p>
+    <img src="images/prediction.svg" class="posterior-diagram" style="margin-top: 0;">
+  </div>
+</div>
+</section><section>
+<h1 id="particle-filters">Particle Filters</h1>
+<div class="pf-layout">
+  <div class="pf-copy">
+    <p>A particle filter represents belief with a <strong>cloud of weighted hypotheses</strong>.</p>
+    <div class="takeaway-line">
+      <span>01</span>
+      <p>Each particle is one possible state.</p>
+    </div>
+    <div class="takeaway-line">
+      <span>02</span>
+      <p>Each weight says how plausible it is.</p>
+    </div>
+    <div class="takeaway-line">
+      <span>03</span>
+      <p>Likely particles survive; unlikely particles fade out.</p>
+    </div>
+    <div class="process-line">
+      <span>predict</span>
+      <span>weight</span>
+      <span>resample</span>
+      <span>estimate</span>
+    </div>
+  </div>
+  <div class="pf-visual">
+    <img src="./images/particles-distribution/step_0.png">
+    <p><strong>The estimate is a distribution, not only a point.</strong></p>
+  </div>
+</div>
+<div class="meta-note">
+  In IoT, particle filtering is not only an estimation problem: it is a <strong>coordination problem</strong>.
+</div>
+
+</section><section>
+<h1 id="particle-filter-over-time">Particle Filter Over Time</h1>
+<div class="image-grid">
+  <div class="image-grid-item">
+    <img src="./images/particles-distribution/step_0.png">
+    <div class="image-grid-title">t = 0</div>
+    <div class="image-grid-caption">many possible hypotheses</div>
+  </div>
+  <div class="image-grid-item">
+    <img src="./images/particles-distribution/step_1000.png">
+    <div class="image-grid-title">t = 1000</div>
+    <div class="image-grid-caption">belief concentrates</div>
+  </div>
+  <div class="image-grid-item">
+    <img src="./images/particles-distribution/step_2000.png">
+    <div class="image-grid-title">t = 2000</div>
+    <div class="image-grid-caption">the cloud follows the target</div>
+  </div>
+  <div class="image-grid-item">
+    <img src="./images/particles-distribution/step_2900.png">
+    <div class="image-grid-title">t = 2900</div>
+    <div class="image-grid-caption">uncertainty remains explicit</div>
+  </div>
+</div>
+<div class="meta-note">
+  The particle cloud follows the target while keeping the estimation error visible as uncertainty.
+</div>
+
+</section><section>
+<h1 id="distributed-particle-filters">Distributed Particle Filters</h1>
+<p class="lead-line">In IoT systems, observations are naturally collected by many spatially distributed devices.</p>
+<div class="dpf-compare">
+  <div class="compare-item">
+    <h3>Centralized PF</h3>
+    <p>All observations are assumed to be available to one estimator.</p>
+    <div class="compact-equation">$$p(x_t \mid y_{1:t})$$</div>
+    <p>Simple, but unrealistic for open IoT deployments.</p>
+  </div>
+  <div class="compare-item is-focus">
+    <h3>Distributed PF</h3>
+    <p>Each device observes only local information.</p>
+    <div class="compact-equation">$$y_{t,k} = h_k(x_t, v_{t,k})$$</div>
+    <p>The goal is to approximate the same global belief through local cooperation.</p>
+  </div>
+</div>
+<div class="meta-note">
+  <strong>DPF keeps the filtering logic, but turns estimation into a coordination problem.</strong>
+</div>
+
+</section><section>
+<h1 id="dpf-many-coordination-choices">DPF: many coordination choices</h1>
+<div class="choices-layout">
+  <div class="choices-copy">
+    <p>DPF algorithms differ mainly in how they move, combine, and exploit information across the network.</p>
+    <div class="pattern-line is-left">
+      <span>where fusion happens</span>
+      <span>what is exchanged</span>
+      <span>how far evidence propagates</span>
+      <span>which nodes participate</span>
+    </div>
+  </div>
+  <div class="choices-tree">
+    <div style="position: relative; width: 100%; height: 500px; margin: 0 auto; font-size: 0.68em;" aria-label="Particle filter architecture taxonomy">
+      
+      <div style="position: absolute; left: 40%; top: 50px; width: 2px; height: 44px; background: #3d4652; z-index: 1;"></div>
+      <div style="position: absolute; left: 20%; top: 92px; width: 40%; height: 2px; background: #3d4652; z-index: 1;"></div>
+      <div style="position: absolute; left: 20%; top: 92px; width: 2px; height: 40px; background: #3d4652; z-index: 1;"></div>
+      <div style="position: absolute; left: 60%; top: 92px; width: 2px; height: 40px; background: #3d4652; z-index: 1;"></div>
+    
+      
+      <div style="position: absolute; left: 60%; top: 190px; width: 2px; height: 42px; background: #3d4652; z-index: 1;"></div>
+      <div style="position: absolute; left: 40%; top: 232px; width: 40%; height: 2px; background: #3d4652; z-index: 1;"></div>
+      <div style="position: absolute; left: 40%; top: 232px; width: 2px; height: 40px; background: #3d4652; z-index: 1;"></div>
+      <div style="position: absolute; left: 80%; top: 232px; width: 2px; height: 40px; background: #3d4652; z-index: 1;"></div>
+    
+      
+      <div style="position: absolute; left: 80%; top: 330px; width: 2px; height: 42px; background: #3d4652; z-index: 1;"></div>
+      <div style="position: absolute; left: 60%; top: 372px; width: 40%; height: 2px; background: #3d4652; z-index: 1;"></div>
+      <div style="position: absolute; left: 60%; top: 372px; width: 2px; height: 40px; background: #3d4652; z-index: 1;"></div>
+      <div style="position: absolute; left: 100%; top: 372px; width: 2px; height: 40px; background: #3d4652; z-index: 1;"></div>
+    
+      <div style="position: absolute; top: 5px; left: 40%; transform: translateX(-50%); width: 200px; padding: 0.55rem 0.75rem; border: 2px solid #3d4652; border-radius: 0.35rem; background: #eef3f7; color: #374151; font-weight: 300; line-height: 1.15; text-align: center; z-index: 2; box-sizing: border-box;">
+        Particle Filters
+      </div>
+    
+      <div style="position: absolute; top: 132px; left: 20%; transform: translateX(-50%); width: 200px; padding: 0.55rem 0.75rem; border: 2px solid #3d4652; border-radius: 0.35rem; background: #eef3f7; color: #374151; font-weight: 300; line-height: 1.15; text-align: center; z-index: 2; box-sizing: border-box;">
+        Centralized<br>Particle Filters
+      </div>
+    
+      <div style="position: absolute; top: 132px; left: 60%; transform: translateX(-50%); width: 200px; padding: 0.55rem 0.75rem; border: 2px solid #3d4652; border-radius: 0.35rem; background: #eef3f7; color: #374151; font-weight: 300; line-height: 1.15; text-align: center; z-index: 2; box-sizing: border-box;">
+        Distributed<br>Particle Filters
+      </div>
+    
+      <div style="position: absolute; top: 272px; left: 40%; transform: translateX(-50%); width: 200px; padding: 0.55rem 0.75rem; border: 2px solid #3d4652; border-radius: 0.35rem; background: #eef3f7; color: #374151; font-weight: 300; line-height: 1.15; text-align: center; z-index: 2; box-sizing: border-box;">
+        FC-Based<br>Particle Filters
+      </div>
+    
+      <div style="position: absolute; top: 272px; left: 80%; transform: translateX(-50%); width: 200px; padding: 0.55rem 0.75rem; border: 2px solid #3d4652; border-radius: 0.35rem; background: #eef3f7; color: #374151; font-weight: 300; line-height: 1.15; text-align: center; z-index: 2; box-sizing: border-box;">
+        Decentralized<br>Particle Filters
+      </div>
+    
+      <div style="position: absolute; top: 412px; left: 60%; transform: translateX(-50%); width: 200px; padding: 0.55rem 0.75rem; border: 2px solid #3d4652; border-radius: 0.35rem; background: #eef3f7; color: #374151; font-weight: 300; line-height: 1.15; text-align: center; z-index: 2; box-sizing: border-box;">
+        LA-Based<br>Particle Filters
+      </div>
+    
+      <div style="position: absolute; top: 412px; left: 100%; transform: translateX(-50%); width: 200px; padding: 0.55rem 0.75rem; border: 2px solid #3d4652; border-radius: 0.35rem; background: #eef3f7; color: #374151; font-weight: 300; line-height: 1.15; text-align: center; z-index: 2; box-sizing: border-box;">
+        Consensus<br>Particle Filters
+      </div>
+    </div>
+  </div>
+</div>
+</section><section>
+<h1 id="what-makes-dpf-hard">What Makes DPF Hard?</h1>
+
+
+<div style="margin-top: 4rem;"></div>
+<div class="challenge-strip">
+  <div class="challenge-item">
+    <div>
+      <h3>Communication constraints</h3>
+      <p>Bandwidth, latency, energy, and robustness make centralized collection unrealistic.</p>
+    </div>
+  </div>
+  <div class="challenge-item">
+    <div>
+      <h3>Networks change</h3>
+      <p>Delays, topology changes, asynchrony, and failures affect estimation.</p>
+    </div>
+  </div>
+  <div class="challenge-item is-critical">
+    <div>
+      <h3>Trade-offs</h3>
+      <p>Accuracy, overhead, complexity, and robustness must be balanced.</p>
+    </div>
+  </div>
+</div>
+</section><section>
+<h1 id="aggregate-computing">Aggregate Computing</h1>
+<h3 id="a-macroprogramming-approach-to-coordination">A macroprogramming approach to coordination</h3>
+<div class="ac-overview">
+  <div class="ac-visual">
+    <img src="./images/acDevices.svg">
+  </div>
+  <div class="ac-copy">
+    <p>Aggregate Computing lets developers describe the <strong>collective behavior</strong> of a system, rather than programming each device separately.</p>
+    <p>The program manipulates <strong>computational fields</strong>: distributed values evolving across the network.</p>
+  </div>
+</div>
+<div class="pattern-line">
+  <span>spreading information</span>
+  <span>aggregating evidence</span>
+  <span>converging data</span>
+  <span>electing leaders</span>
+</div>
+<div class="meta-note">
+  <strong>Key intuition:</strong> devices execute local code, but the programmer reasons in terms of global coordination patterns.
+</div>
+
+</section><section>
+<h1 id="ac-computational-model">AC Computational Model</h1>
+
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col "><h3 id="from-collective-program-to-local-execution">From collective program to local execution</h3>
+<div class="ac-model-layout">
+  <div class="takeaway-editorial">
+    <p>One program, many local executions</p>
+    <div class="takeaway-line">
+      <span>01</span>
+      <p><strong>Collective specification.</strong> The programmer writes the behavior of the whole device network.</p>
+    </div>
+    <div class="takeaway-line">
+      <span>02</span>
+      <p><strong>Local rounds.</strong> Each device evaluates the same program using local sensors, memory, and neighbor messages.</p>
+    </div>
+    <div class="takeaway-line is-critical">
+      <span>03</span>
+      <p><strong>Emergent field.</strong> The collection of local values forms the global computational field.</p>
+    </div>
+  </div>
+</div>
+<div class="pattern-line">
+  <span>local sensing</span>
+  <span>neighbor exchange</span>
+  <span>state update</span>
+  <span>field evolution</span>
+</div>
+</div>
+<div class="col "><h3 id="round-based-model">Round-based model</h3>
+<div class="local-round-slide">
+  <div class="local-round-points">
+    <p><strong>Each round consists of three repeated phases:</strong></p>
+    <ol>
+      <li class="fragment" data-fragment-index="1">
+        <strong class="local-round-sense-text">Sense</strong> collect sensor inputs and incoming neighbor messages.
+      </li>
+      <li class="fragment" data-fragment-index="2">
+        <strong class="local-round-compute-text">Compute</strong> run local state evaluation logic to produce <span class="local-round-mark-teal">new state</span> and <span class="local-round-mark-green">outbound messages</span>.
+      </li>
+      <li class="fragment" data-fragment-index="3">
+        <strong class="local-round-interact-text">Interact / Act</strong> share results and affect the local environment.
+      </li>
+    </ol>
+    <p class="fragment local-round-async" data-fragment-index="4">The model does not require global lock-step.</p>
+  </div>
+<div class="local-round-visual" style="background: transparent; background-color: transparent; box-shadow: none; border: none;">
+<div class="local-round-loop" aria-label="Local aggregate-computing round" style="background: transparent; background-color: transparent; box-shadow: none; border: none;">
+<svg viewBox="0 0 520 360" class="local-round-loop-svg" aria-hidden="true" style="background: transparent; background-color: transparent;">
+<path d="M142 110 C 212 62, 308 62, 378 110" class="local-round-arc local-round-arc-top"></path>
+<path d="M394 142 C 422 198, 416 255, 362 296" class="local-round-arc local-round-arc-right"></path>
+<path d="M160 296 C 106 255, 98 198, 126 142" class="local-round-arc local-round-arc-left"></path>
+<line x1="116" y1="180" x2="222" y2="180" class="local-round-neighbor-line local-round-neighbor-line-in"></line>
+<line x1="298" y1="180" x2="404" y2="180" class="local-round-neighbor-line local-round-neighbor-line-out"></line>
+<circle cx="148" cy="180" r="7" class="local-round-msg local-round-msg-in"></circle>
+<circle cx="372" cy="180" r="7" class="local-round-msg local-round-msg-out"></circle>
+<g class="fragment local-round-highlight local-round-highlight-sense" data-fragment-index="1">
+<path d="M160 296 C 106 255, 98 198, 126 142" class="local-round-active-arc local-round-active-sense"></path>
+<line x1="116" y1="180" x2="222" y2="180" class="local-round-active-line local-round-active-sense"></line>
+<circle cx="148" cy="180" r="7" class="local-round-active-msg local-round-active-msg-in"></circle>
+</g>
+<g class="fragment local-round-highlight local-round-highlight-interact" data-fragment-index="3">
+<path d="M394 142 C 422 198, 416 255, 362 296" class="local-round-active-arc local-round-active-interact"></path>
+<line x1="298" y1="180" x2="404" y2="180" class="local-round-active-line local-round-active-interact"></line>
+<circle cx="372" cy="180" r="7" class="local-round-active-msg local-round-active-msg-out"></circle>
+</g>
+<g class="fragment local-round-highlight-all" data-fragment-index="4">
+<path d="M142 110 C 212 62, 308 62, 378 110" class="local-round-active-arc local-round-active-compute"></path>
+<path d="M394 142 C 422 198, 416 255, 362 296" class="local-round-active-arc local-round-active-interact"></path>
+<path d="M160 296 C 106 255, 98 198, 126 142" class="local-round-active-arc local-round-active-sense"></path>
+<line x1="116" y1="180" x2="222" y2="180" class="local-round-active-line local-round-active-sense"></line>
+<line x1="298" y1="180" x2="404" y2="180" class="local-round-active-line local-round-active-interact"></line>
+<circle cx="148" cy="180" r="7" class="local-round-active-msg local-round-active-msg-in"></circle>
+<circle cx="372" cy="180" r="7" class="local-round-active-msg local-round-active-msg-out"></circle>
+</g>
+</svg>
+<div class="local-round-phase local-round-phase-sense">Sense</div>
+<div class="local-round-phase local-round-phase-compute">Compute</div>
+<div class="local-round-phase local-round-phase-interact">Interact / Act</div>
+<div class="local-round-device local-round-device-core">device</div>
+<div class="local-round-device local-round-device-neighbor local-round-device-left">nbr</div>
+<div class="local-round-device local-round-device-neighbor local-round-device-right">nbr</div>
+<div class="fragment local-round-label-highlight local-round-phase local-round-phase-sense" data-fragment-index="1">Sense</div>
+<div class="fragment local-round-label-highlight local-round-phase local-round-phase-compute" data-fragment-index="2">Compute</div>
+<div class="fragment local-round-label-highlight local-round-phase local-round-phase-interact" data-fragment-index="3">Interact / Act</div>
+<div class="fragment local-round-label-highlight-all local-round-phase local-round-phase-sense" data-fragment-index="4">Sense</div>
+<div class="fragment local-round-label-highlight-all local-round-phase local-round-phase-compute" data-fragment-index="4">Compute</div>
+<div class="fragment local-round-label-highlight-all local-round-phase local-round-phase-interact" data-fragment-index="4">Interact / Act</div>
+<div class="fragment local-round-device-highlight local-round-device local-round-device-core" data-fragment-index="2">device</div>
+<div class="fragment local-round-device-highlight-all local-round-device local-round-device-core" data-fragment-index="4">device</div>
+<div class="fragment local-round-device-highlight local-round-device local-round-device-neighbor local-round-device-left" data-fragment-index="1">nbr</div>
+<div class="fragment local-round-device-highlight local-round-device local-round-device-neighbor local-round-device-right" data-fragment-index="3">nbr</div>
+<div class="fragment local-round-device-highlight-all local-round-device local-round-device-neighbor local-round-device-left" data-fragment-index="4">nbr</div>
+<div class="fragment local-round-device-highlight-all local-round-device local-round-device-neighbor local-round-device-right" data-fragment-index="4">nbr</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<h1 id="key-idea-dpf-as-a-field-computation">Key Idea: DPF as a Field Computation</h1>
+<p class="lead-line">The goal is <strong>not</strong> to introduce yet another DPF algorithm.</p>
+<div class="idea-layout">
+  <div class="idea-side">
+    <h3>Filtering logic</h3>
+    <p>This remains standard.</p>
+    <div class="process-line">
+      <span>prediction</span>
+      <span>weighting</span>
+      <span>resampling</span>
+      <span>estimation</span>
+    </div>
+  </div>
+  <div class="idea-side is-focus">
+    <h3>Coordination choices</h3>
+    <p>These become programmable.</p>
+    <div class="process-line">
+      <span>where fusion happens</span>
+      <span>what to exchange</span>
+      <span>how information propagates</span>
+      <span>who is active</span>
+    </div>
+  </div>
+</div>
+<div class="meta-note">
+  <strong>Architectural assumptions become design parameters.</strong>
+</div>
+
+</section><section>
+<h3 id="contribution-1">Contribution 1:</h3>
+<h1 id="aggregate-measurement-function">Aggregate measurement function</h1>
+<div class="contribution-layout">
+  <div class="contribution-copy">
+    <p>Each node keeps its own local particle filter.</p>
+    <p>Instead of exchanging particle sets, neighbors share raw observations; local likelihoods are combined during the weighting step.</p>
+    <p>Nearby sensors collectively behave like a <strong>distributed sensor</strong>.</p>
+  </div>
+  <div class="equation-spotlight">
+    \[
+    \hat{y}_t =
+    H_{\mathcal{N}(k)}
+    \bigl(
+    \{ h_j(x_t, v_{j,t}) \}_{j \in \mathcal{N}(k)}
+    \bigr)
+    \]
+  </div>
+</div>
+<div class="meta-note">
+  <strong>Intuition:</strong> more neighbors provide richer local observations, so the aggregated measurement becomes more informative; with few neighbors, the estimate remains weaker and less stable.
+</div>
+
+</section><section>
+<h3 id="contribution-2">Contribution 2:</h3>
+<h1 id="self-healing-fusion-center">Self-Healing Fusion Center</h1>
+<div class="healing-layout">
+  <div class="takeaway-editorial">
+    <h2>Leader-based fusion as a field-level behavior</h2>
+    <div class="takeaway-line">
+      <span>01</span>
+      <p><strong>Election.</strong> A leader is selected dynamically.</p>
+    </div>
+    <div class="takeaway-line">
+      <span>02</span>
+      <p><strong>Fusion.</strong> The leader behaves as the current fusion center.</p>
+    </div>
+    <div class="takeaway-line is-critical">
+      <span>03</span>
+      <p><strong>Failure.</strong> If the leader disappears, the role is reassigned.</p>
+    </div>
+    <div class="takeaway-line">
+      <span>04</span>
+      <p><strong>Self-healing.</strong> A new leader resumes the behavior.</p>
+    </div>
+  </div>
+  <div class="healing-statement">
+    <p>Configuration lets us move along the spectrum between centralized simplicity and decentralized robustness.</p>
+  </div>
+</div>
+</section><section>
+<h1 id="experimental-evaluation">Experimental Evaluation</h1>
+<div class="eval-layout">
+  <div class="eval-main">
+    <h3>Scenario</h3>
+    <div class="metric-band">
+      <span class="metric-pill">Alchemist Simulator</span>
+      <span class="metric-pill">Collektive DSL</span>
+      <span class="metric-pill">2D target tracking</span>
+      <span class="metric-pill">25 sensors</span>
+      <span class="metric-pill">3000 simulated seconds</span>
+      <span class="metric-pill">100 seeds</span>
+    </div>
+    <p>Each sensor observes the target through a radio-like signal: closer targets produce stronger, cleaner evidence; farther targets produce weaker and noisier evidence.</p>
+    <p>Not all sensors are equally informative at every time step.</p>
+  </div>
+  <div class="eval-configs">
+    <h3>Evaluated configurations</h3>
+    <div class="config-row">
+      <span class="config-index">1</span>
+      <div><strong>Local PF + aggregated measurements</strong><br>each sensor has its own PF; only measurements are shared.</div>
+    </div>
+    <div class="config-row is-critical">
+      <span class="config-index">2</span>
+      <div><strong>Elected leader as fusion center</strong><br>measurements converge to a leader; failure is injected at time step 1500.</div>
+    </div>
+  </div>
+</div>
+<img alt="experiment setup" src="./images/experiment.gif" width="30%">
+</section><section>
+<h2 id="experiment-1-aggregate-measurement-function">Experiment 1: AGGREGATE MEASUREMENT FUNCTION</h2>
+<div class="experiment-brief">
+  <div>
+    <p>Each sensor keeps its <strong>own local particle filter</strong>. No particles are exchanged.</p>
+  </div>
+  <div class="experiment-equation">$$|\mathcal{N}| \in \{0, 1, 4, 7\}$$</div>
+  <div>
+    <p><strong>Small neighborhood</strong> → weak evidence → high error</p>
+    <p><strong>Larger neighborhood</strong> → aggregated evidence → better tracking</p>
+  </div>
+</div>
+<div class="plot-card">
+  <img src="./images/trajectories.png" style="width: 76%;">
+</div>
+</section><section>
+<h2 id="experiment-1-results-rmse">Experiment 1 results: RMSE</h2>
+
+<div class="container w-100 m-0 p-0">
+    <div class="row "><div class="col "><div class="plot-card">
+  <img src="./images/rmse.png" style="width: 100%;">
+</div>
+</div>
+<div class="col "><ul>
+<li>RMSE measures the distance between the estimated target position and the real one.</li>
+<li>With few neighbors, the error remains high.</li>
+<li>Increasing $|\mathcal{N}|$ reduces RMSE and improves long-term stability.</li>
+<li>The benefit comes from sharing <strong>measurements</strong>, not particle sets.</li>
+</ul>
+</div>
+</div>
+</div>
+</section><section>
+<h2 id="experiment-2-self-healing-fusion">Experiment 2: Self-Healing Fusion</h2>
+<div class="exp2-layout">
+  <div class="exp2-copy">
+    <p>An elected leader plays the fusion-center role. At time step <strong>1500</strong>, the leader fails.</p>
+    <div class="takeaway-line">
+      <span>01</span>
+      <p>Transient during initial leader election</p>
+    </div>
+    <div class="takeaway-line">
+      <span>02</span>
+      <p>Convergence to a valid estimation</p>
+    </div>
+    <div class="takeaway-line is-critical">
+      <span>03</span>
+      <p>Transient after leader failure</p>
+    </div>
+    <div class="takeaway-line">
+      <span>04</span>
+      <p>Resumed tracking after re-election</p>
+    </div>
+    <p>Fusion-center behavior can be retained without a permanently fixed center.</p>
+  </div>
+  <div class="plot-card">
+    <img src="./images/trajectories-fc-based.png" style="width: 82%;">
+    <div class="plot-caption">The <span class="accent-red">red line</span> marks the failure; the following deviation is the temporary tracking error caused by reconfiguration.</div>
+  </div>
+</div>
+</section><section>
+<h1 id="takeaways-and-future-work">Takeaways and Future Work</h1>
+<div class="closing-layout">
+  <div class="takeaway-editorial">
+    <h2>Takeaways</h2>
+    <div class="takeaway-line">
+      <span>-</span>
+      <p><strong>DPF as field computation.</strong> Filtering stays standard; coordination becomes programmable.</p>
+    </div>
+    <div class="takeaway-line">
+      <span>-</span>
+      <p><strong>Flexible architectures.</strong> Fusion, dissemination, and active regions become configurable choices.</p>
+    </div>
+    <div class="takeaway-line">
+      <span>-</span>
+      <p><strong>Local likelihood aggregation works.</strong> Sharing observations improves tracking without exchanging particle sets.</p>
+    </div>
+    <div class="takeaway-line is-critical">
+      <span>-</span>
+      <p><strong>Fusion can self-heal.</strong> Leader election preserves fusion-center behavior after failures.</p>
+    </div>
+  </div>
+  <div class="future-panel">
+    <h2>Future work</h2>
+    <div class="future-group">
+      <h3>Explore more AC design dimensions</h3>
+      <p>Broader coordination strategies for propagation and fusion; activation only in relevant regions.</p>
+    </div>
+    <div class="future-group">
+      <h3>Extend the scenarios</h3>
+      <p>Multiple moving targets, flocking-inspired coordination, heterogeneous sensing, and richer deployment conditions.</p>
+    </div>
+  </div>
+</div>
+</section><section>
+<h1 id="thank-you-for-your-attention">Thank you for your attention!</h1>
+
+
+<div style="margin-top: 4rem;"></div>
+<h3 id="reproducible-experiments-here">Reproducible experiments here:</h3>
+<div class="insight-card" style="max-width: 58%; margin: 0 auto;">
+  <div id="Mzg4MGM3OWY2NzM3NWU0NzBmMWMyMGIzZTU4YThmYjI0Mjk5OGQ0ZTc2MTdhZGM3ZTNmMWQ3YzNlY2IwNzU0NQ==" style=""></div>
+  <script type="text/javascript">
+      const themeRoot = document.querySelector(".reveal") || document.documentElement;
+      const themeMainColor = getComputedStyle(themeRoot).getPropertyValue("--r-main-color").trim() || "#095aa6";
+      const dotsColorSetting = "theme";
+      const backgroundColorSetting = "transparent";
+      const imageSetting = "";
+      const dotsColor = dotsColorSetting === "theme" || dotsColorSetting === "" ? themeMainColor : dotsColorSetting;
+      const backgroundColor = backgroundColorSetting === "transparent" || backgroundColorSetting === "" ? "transparent" : backgroundColorSetting;
+      const githubSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${dotsColor}"><path d="M12 .297C5.373.297 0 5.67 0 12.297c0 5.3 3.438 9.8 8.205 11.385.6.112.82-.261.82-.583 0-.288-.01-1.048-.015-2.056-3.338.73-4.042-1.64-4.042-1.64-.546-1.39-1.333-1.762-1.333-1.762-1.09-.744.082-.729.082-.729 1.205.085 1.84 1.24 1.84 1.24 1.07 1.843 2.807 1.311 3.492 1.003.108-.775.419-1.31.762-1.612-2.665-.304-5.466-1.327-5.466-5.905 0-1.306.468-2.374 1.236-3.21-.124-.303-.536-1.523.117-3.177 0 0 1.008-.322 3.3 1.23.957-.266 1.984-.398 3.004-.403 1.02.005 2.048.137 3.008.403 2.28-1.552 3.286-1.23 3.286-1.23.654 1.654.242 2.874.118 3.177.77.836 1.235 1.904 1.235 3.21 0 4.59-2.804 5.599-5.475 5.897.43.368.821 1.1.821 2.216 0 1.6-.014 2.89-.014 3.283 0 .323.218.7.825.58C20.565 22.093 24 17.594 24 12.297 24 5.67 18.627.297 12 .297Z"/></svg>`;
+      const defaultImage = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(githubSvg)}`;
+      const resolvedImage = imageSetting === "" ? defaultImage : imageSetting;
+      const qrCode = new QRCodeStyling({
+          width:  240 ,
+          height:  240 ,
+          type: "svg",
+          data: "https://github.com/domm99/experiments-ac-based-distributed-particle-filtering",
+          image: resolvedImage,
+          dotsOptions: {
+              color: dotsColor,
+              type: "rounded"
+          },
+          backgroundOptions: {
+              color: backgroundColor,
+          },
+          imageOptions: {
+              crossOrigin: "anonymous",
+              margin:  10 
+          }
+      });
+      qrCode.append(document.getElementById("Mzg4MGM3OWY2NzM3NWU0NzBmMWMyMGIzZTU4YThmYjI0Mjk5OGQ0ZTc2MTdhZGM3ZTNmMWQ3YzNlY2IwNzU0NQ=="));
+  </script>
+
+  <p><i class="fab fa-github mr-3" style="color: #095aa6;"></i> <a href="https://github.com/domm99/experiments-ac-based-distributed-particle-filtering">domm99/experiments-ac-based-distributed-particle-filtering</a></p>
+</div>
+</section>
+
+  
+
+
+</div>
+      
+
+    </div>
+<script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-hugo/object-assign.js"></script>
+
+<a href="/presentation-2026-dcoss-ac-dpf/reveal-js/dist/print/" id="print-location" style="display: none;"></a>
+
+<script type="application/json" id="reveal-hugo-site-params">{"custom_theme":"custom-theme.scss","custom_theme_compile":true,"custom_theme_options":{"enablesourcemap":true,"targetpath":"css/custom-theme.css"},"height":"1080","highlight_theme":"solarized-dark","history":true,"mermaid":[{}],"slide_number":true,"theme":"league","transition":"slide","transition_speed":"fast","width":"1920"}</script>
+<script type="application/json" id="reveal-hugo-page-params">null</script>
+
+<script src="/presentation-2026-dcoss-ac-dpf/reveal-js/dist/reveal.js"></script>
+
+
+  
+  
+  <script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-js/plugin/markdown/markdown.js"></script>
+  
+  <script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-js/plugin/highlight/highlight.js"></script>
+  
+  <script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-js/plugin/zoom/zoom.js"></script>
+  
+  <script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-js/plugin/notes/notes.js"></script>
+  
+  
+  <script type="text/javascript" src="/presentation-2026-dcoss-ac-dpf/reveal-js/plugin/notes/notes.js"></script>
+
+
+
+
+<script type="text/javascript">
+  
+  
+  function camelize(map) {
+    if (map) {
+      Object.keys(map).forEach(function(k) {
+        newK = k.replace(/(\_\w)/g, function(m) { return m[1].toUpperCase() });
+        if (newK != k) {
+          map[newK] = map[k];
+          delete map[k];
+        }
+      });
+    }
+    return map;
+  }
+
+  var revealHugoDefaults = { center: true, controls: true, history: true, progress: true, transition: "slide" };
+
+  var revealHugoPlugins = {
+    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ]
+   };
+  var revealHugoSiteParams = JSON.parse(document.getElementById('reveal-hugo-site-params').innerHTML);
+  var revealHugoPageParams = JSON.parse(document.getElementById('reveal-hugo-page-params').innerHTML);
+  
+  var options = Object.assign({},
+    camelize(revealHugoDefaults),
+    camelize(revealHugoSiteParams),
+    camelize(revealHugoPageParams),
+    camelize(revealHugoPlugins));
+  Reveal.initialize(options);
+</script>
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+
+
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+</script>
+
+<script type="text/javascript" id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+<script>
+  if (/.*?(\?|&)print-pdf/.test(window.location.toString())) {
+      var ytVideos = document.getElementsByTagName("iframe")
+      for (let i = 0; i < ytVideos.length; i++) {
+          var videoFrame = ytVideos[i]
+          var isYouTube = /^https?:\/\/(www.)youtube\.com\/.*/.test(videoFrame.src)
+          if (isYouTube) {
+              console.log(`Removing ${videoFrame.src}`)
+              var parent = videoFrame.parentElement
+              videoFrame.remove()
+              var p = document.createElement('p')
+              p.append(
+                  document.createTextNode(
+                      "There was an embedded video here, but it is disabled in the printed version of the slides."
+                  )
+              )
+              p.append(document.createElement('br'))
+              p.append(
+                  document.createTextNode(
+                      `Visit instead ${
+                          videoFrame.src
+                      } or ${
+                          videoFrame.src.replace(
+                              /(^https?:\/\/(www.)youtube\.com)\/(embed\/)(\w+).*/,
+                              "https://www.youtube.com/watch?v=$4"
+                          )
+                      }`
+                  )
+              )
+              parent.appendChild(p)
+          }
+      }
+  }
+</script>
+
+
+    
+  
+
+</body></html>
