@@ -27,26 +27,17 @@ Alma Mater Studiorum -- University of Bologna - Cesena, Italy*</span>
 ---
 
 # Motivation
+Cyber-physical systems applications, such as target tracking, environmental monitoring, mobility and traffic, or smart city sensing, must estimate a <strong>hidden dynamical state</strong> from distributed, noisy observations.</p>
 
-<div class="motivation-layout">
-  <div class="motivation-copy">
-    <p>Many cyber-physical systems must estimate a <strong>hidden dynamical state</strong> from distributed, noisy observations.</p>
-    <div class="pattern-line is-left">
-      <span>target tracking</span>
-      <span>environmental monitoring</span>
-      <span>mobility and traffic</span>
-      <span>smart-city sensing</span>
-    </div>
-    <div class="constraint-line">
-      <span>Constraint</span>
-      <p>No single device directly observes the full state.</p>
-    </div>
-  </div>
-  <div class="motivation-visual">
-    <img src="./images/Gemini_Generated_Image_y0tp7fy0tp7fy0tp.jpg">
-    <p><strong>Tracking intuition:</strong> sensors observe fragments of evidence; the system reconstructs the target trajectory.</p>
-  </div>
-</div>
+<span>Constraints:</span>
+No single device directly observes the full state.
+Devices can enter into and leave the network.
+The network topology may change over time.
+Cannot rely on a single fusion center due to bandwidth, latency, energy, and robustness constraints.
+
+<img src="./images/Gemini_Generated_Image_y0tp7fy0tp7fy0tp.jpg">
+    
+**Tracking intuition:** sensors observe fragments of evidence; the system reconstructs the target trajectory.</p>
 
 ---
 
