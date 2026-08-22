@@ -1,10 +1,10 @@
 +++
-title = "Flexible Distributed Particle Filtering for the Internet of Things via Aggregate Computing"
-description = "DCOSS-IoT 2026 presentation"
+title = "Multi-Target Tracking via Field-Based Distributed Particle Filtering"
+description = "ACSOS 2026 presentation"
 outputs = ["Reveal"]
 +++
 
-# Flexible Distributed Particle Filtering for the Internet of Things via Aggregate Computing
+# Multi-Target Tracking via Field-Based Distributed Particle Filtering
 
 {{% spacer %}}
 
@@ -12,7 +12,6 @@ outputs = ["Reveal"]
 [Davide Domini](mailto:davide.domini@unibo.it),
 [Giovanni Ciatto](mailto:giovanni.ciatto@unibo.it),
 [Roberto Casadei](mailto:roby.casadei@unibo.it),
-[Danilo Pianini](mailto:danilo.pianini@unibo.it),
 and
 [Mirko Viroli](mailto:mirko.viroli@unibo.it)
 

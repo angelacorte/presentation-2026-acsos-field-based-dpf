@@ -1,4 +1,4 @@
-baseURL = "https://angelacorte.github.io/presentation-2026-dcoss-ac-dpf/"
+baseURL = "https://angelacorte.github.io/presentation-2026-acsos-field-based-dpf/"
 languageCode = "en-us"
 title = "Field-Based Distributed Particle Filtering"
 disableKinds = ["sitemap", "RSS"]
