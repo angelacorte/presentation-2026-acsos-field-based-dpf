@@ -1,0 +1,9 @@
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" | default "Sequence image" }}
+{{ $title := .Get "title" }}
+{{ $caption := .Get "caption" }}
+<figure class="image-step">
+  <img src="{{ $src }}" alt="{{ $alt }}">
+  {{ with $title }}<div class="image-step-title">{{ . }}</div>{{ end }}
+  {{ with $caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+</figure>

@@ -11,106 +11,65 @@ outputs = ["Reveal"]
 [**<span class="deck-title-accent">Angela Cortecchia</span>**](mailto:angela.cortecchia@unibo.it),
 [Davide Domini](mailto:davide.domini@unibo.it),
 [Giovanni Ciatto](mailto:giovanni.ciatto@unibo.it),
-[Roberto Casadei](mailto:roby.casadei@unibo.it),
-and
+[Roberto Casadei](mailto:roby.casadei@unibo.it), and
 [Mirko Viroli](mailto:mirko.viroli@unibo.it)
 
 {{% spacer %}}
 
 <span class="deck-affiliation">*Department of Computer Science and Engineering (DISI)<br>
-Alma Mater Studiorum -- University of Bologna - Cesena, Italy*</span>
+Alma Mater Studiorum — University of Bologna, Cesena, Italy*</span>
 
 <div class="hero-logo">
-  <img src="./images/DIP INFORMATICA-SCIENZA E INGEGNERIA_DISI_EN.svg">
+  <img src="./images/DIP INFORMATICA-SCIENZA E INGEGNERIA_DISI_EN.svg" alt="University of Bologna — DISI">
 </div>
 
 ---
 
-# Motivation
-Cyber-physical systems applications, such as target tracking, environmental monitoring, mobility and traffic, or smart city sensing, must estimate a <strong>hidden dynamical state</strong> from distributed, noisy observations.</p>
+# The estimator must adapt while the sensing system changes
 
-<span>Constraints:</span>
-No single device directly observes the full state.
-Devices can enter into and leave the network.
-The network topology may change over time.
-Cannot rely on a single fusion center due to bandwidth, latency, energy, and robustness constraints.
+{{< deck-grid columns="2" class="motivation-grid" >}}
+{{< deck-panel label="WHY IT MATTERS" title="Hidden states, partial evidence" >}}
+Cyber-physical systems estimate a **hidden dynamical state** from distributed, noisy observations.
 
-<img src="./images/Gemini_Generated_Image_y0tp7fy0tp7fy0tp.jpg">
-    
-**Tracking intuition:** sensors observe fragments of evidence; the system reconstructs the target trajectory.</p>
+Target tracking, environmental monitoring, robotic coordination, and cyber-physical control all share this challenge.
 
----
+But the sensing system is dynamic too:
 
-# From Observations to a Posterior Estimate
+- devices join, leave, move, or fail;
+- topology and connectivity change;
+- sensing quality and observability vary;
+- different devices become relevant over time.
+{{< /deck-panel >}}
 
-<div class="posterior-layout" style="align-items: flex-start;">
-  <div class="posterior-copy" style="margin-top: 0; padding-top: 0;">
-    <p>Reconstruct a latent state over time from partial and noisy observations.</p>
-    <div class="equation-line">
-      <span>hidden state</span>
-      <strong>$$x_t$$</strong>
-    </div>
-    <div class="equation-line">
-      <span>observations</span>
-      <strong>$$y_{1:t}$$</strong>
-    </div>
-    <div class="equation-line is-focus">
-      <span>filtering objective</span>
-      <strong>$$p(x_t \mid y_{1:t})$$</strong>
-    </div>
-  </div>
-  <div class="posterior-side" style="margin-top: 0; padding-top: 0;">
-    <div class="posterior-flow">
-      <div class="posterior-flow-step">
-      <strong>Noisy local sensing</strong>
-      partial measurements
-      </div>
-      <div class="posterior-flow-arrow">→</div>
-      <div class="posterior-flow-step">
-      <strong>Posterior state estimate</strong>
-      uncertainty remains explicit
-      </div>
-    </div>
-    <p class="side-statement" style="margin-top: 1.6rem; margin-bottom: 1.8rem;">Classical linear estimators are not enough when dynamics are <strong>non-linear</strong> and uncertainty is <strong>non-Gaussian</strong>.</p>
-    <img src="images/prediction.svg" class="posterior-diagram" style="margin-top: 0;">
-  </div>
-</div>
+<img alt="Gemini_Generated_Image_y0tp7fy0tp7fy0tp.jpg" src="images/Gemini_Generated_Image_y0tp7fy0tp7fy0tp.jpg" width="80%"/>
 
----
-
-# Particle Filters
-
-<div class="pf-layout">
-  <div class="pf-copy">
-    <p>A particle filter represents belief with a <strong>cloud of weighted hypotheses</strong>.</p>
-    <div class="takeaway-line">
-      <span>01</span>
-      <p>Each particle is one possible state.</p>
-    </div>
-    <div class="takeaway-line">
-      <span>02</span>
-      <p>Each weight says how plausible it is.</p>
-    </div>
-    <div class="takeaway-line">
-      <span>03</span>
-      <p>Likely particles survive; unlikely particles fade out.</p>
-    </div>
-    <div class="process-line">
-      <span>predict</span>
-      <span>weight</span>
-      <span>resample</span>
-      <span>estimate</span>
-    </div>
-  </div>
-  <div class="pf-visual">
-    <img src="./images/particles-distribution/step_0.png">
-    <p><strong>The estimate is a distribution, not only a point.</strong></p>
-  </div>
-</div>
+{{< /deck-grid >}}
 
 {{< meta-note >}}
-In IoT, particle filtering is not only an estimation problem: it is a **coordination problem**.
+**Challenge:** maintain a coherent collective estimate while the organization producing it keeps changing.
 {{< /meta-note >}}
+
+---
+
+# Particle filters maintain a distribution of plausible states
+
+{{< deck-grid columns="2" class="pf-intro-grid" >}}
+{{< deck-panel label="FILTERING LOOP" title="Four operations update the belief" class="process-panel" >}}
+**01 · Predict** — Where could the state move next?
+
+**02 · Weight** — Which hypotheses agree with the observations?
+
+**03 · Resample** — Keep plausible hypotheses; discard unlikely ones.
+
+**04 · Estimate** — Use the particles to represent the current belief.
+{{< /deck-panel >}}
+
+<div class="pf-visual">
+<img src="./images/particles-distribution/step_0.png">
+<p><strong>The estimate is a distribution, not only a point.</strong></p>
+</div>
+
+{{< /deck-grid >}}
 
 ---
 
@@ -145,252 +104,148 @@ The particle cloud follows the target while keeping the estimation error visible
 
 ---
 
-# Distributed Particle Filters
+# Distribution turns filtering into a coordination problem
 
-<p class="lead-line">In IoT systems, observations are naturally collected by many spatially distributed devices.</p>
+{{< deck-grid columns="2" class="comparison-grid" >}}
+{{< deck-panel label="ONE ESTIMATOR" title="Centralized particle filtering" >}}
+All observations are available to a single estimator.
 
-<div class="dpf-compare">
-  <div class="compare-item">
-    <h3>Centralized PF</h3>
-    <p>All observations are assumed to be available to one estimator.</p>
-    <div class="compact-equation">$$p(x_t \mid y_{1:t})$$</div>
-    <p>Simple, but unrealistic for open IoT deployments.</p>
-  </div>
-  <div class="compare-item is-focus">
-    <h3>Distributed PF</h3>
-    <p>Each device observes only local information.</p>
-    <div class="compact-equation">$$y_{t,k} = h_k(x_t, v_{t,k})$$</div>
-    <p>The goal is to approximate the same global belief through local cooperation.</p>
-  </div>
-</div>
+$$p(x_t \mid y_{1:t})$$
+{{< /deck-panel >}}
+
+{{< deck-panel label="MANY DEVICES" title="Distributed particle filtering" tone="red" >}}
+Each device observes only local information.
+
+$$y_{t,k} = h_k(x_t, v_{t,k})$$
+{{< /deck-panel >}}
+{{< /deck-grid >}}
+
+Different DPF approaches mainly differ in **where fusion happens, what is exchanged, how far information propagates, and which nodes participate**.
+
+{{< pf-taxonomy-tree >}}
 
 {{< meta-note >}}
-**DPF keeps the filtering logic, but turns estimation into a coordination problem.**
+The filtering objective stays the same; the coordination strategy changes.
 {{< /meta-note >}}
 
 ---
 
-# DPF: many coordination choices
+# Conventional DPF architectures are rigid by design
 
-<div class="choices-layout">
-  <div class="choices-copy">
-    <p>DPF algorithms differ mainly in how they move, combine, and exploit information across the network.</p>
-    <div class="pattern-line is-left">
-      <span>where fusion happens</span>
-      <span>what is exchanged</span>
-      <span>how far evidence propagates</span>
-      <span>which nodes participate</span>
-    </div>
-  </div>
-  <div class="choices-tree">
-    {{< pf-taxonomy-tree >}}
-  </div>
-</div>
+{{< deck-grid columns="2" class="comparison-grid" >}}
+{{< deck-panel label="DESIGN TIME" title="Fixed architecture" >}}
+Fusion centers, leaders, communication patterns, and participating nodes are typically defined in advance.
+{{< /deck-panel >}}
 
----
-
-# What Makes DPF Hard?
-
-{{% spacer %}}
-
-<div class="challenge-strip">
-  <div class="challenge-item">
-    <div>
-      <h3>Communication constraints</h3>
-      <p>Bandwidth, latency, energy, and robustness make centralized collection unrealistic.</p>
-    </div>
-  </div>
-  <div class="challenge-item">
-    <div>
-      <h3>Networks change</h3>
-      <p>Delays, topology changes, asynchrony, and failures affect estimation.</p>
-    </div>
-  </div>
-  <div class="challenge-item is-critical">
-    <div>
-      <h3>Trade-offs</h3>
-      <p>Accuracy, overhead, complexity, and robustness must be balanced.</p>
-    </div>
-  </div>
-</div>
-
----
-
-# Aggregate Computing
-### A macroprogramming approach to coordination
-
-<div class="ac-overview">
-  <div class="ac-visual">
-    <img src="./images/acDevices.svg">
-  </div>
-  <div class="ac-copy">
-    <p>Aggregate Computing lets developers describe the <strong>collective behavior</strong> of a system, rather than programming each device separately.</p>
-    <p>The program manipulates <strong>computational fields</strong>: distributed values evolving across the network.</p>
-  </div>
-</div>
-
-<div class="pattern-line">
-  <span>spreading information</span>
-  <span>aggregating evidence</span>
-  <span>converging data</span>
-  <span>electing leaders</span>
-</div>
+{{< deck-panel label="RUNTIME" title="Limited adaptation" tone="red" >}}
+Failures, mobility, topology changes, or shifting observability often require specialized algorithm variants.
+{{< /deck-panel >}}
+{{< /deck-grid >}}
 
 {{< meta-note >}}
-**Key intuition:** devices execute local code, but the programmer reasons in terms of global coordination patterns.
+**Core issue:** filtering semantics and coordination mechanisms are tightly coupled.
 {{< /meta-note >}}
 
 ---
 
-# AC Computational Model
+# Aggregate Computing makes collective coordination programmable
 
-{{% multicol %}}
-{{% col %}}
+### A macroprogramming approach to distributed systems
 
-### From collective program to local execution
+{{< deck-grid columns="2" class="ac-overview-grid" >}}
+{{< deck-figure src="./images/acDevices.svg" alt="Aggregate Computing devices forming a computational field" class="ac-figure" >}}
 
-<div class="ac-model-layout">
-  <div class="takeaway-editorial">
-    <p>One program, many local executions</p>
-    <div class="takeaway-line">
-      <span>01</span>
-      <p><strong>Collective specification.</strong> The programmer writes the behavior of the whole device network.</p>
-    </div>
-    <div class="takeaway-line">
-      <span>02</span>
-      <p><strong>Local rounds.</strong> Each device evaluates the same program using local sensors, memory, and neighbor messages.</p>
-    </div>
-    <div class="takeaway-line is-critical">
-      <span>03</span>
-      <p><strong>Emergent field.</strong> The collection of local values forms the global computational field.</p>
-    </div>
-  </div>
+{{< deck-panel label="ONE PROGRAM, MANY DEVICES" title="Reason globally; execute locally" >}}
+Aggregate Computing describes the **collective behavior** of a system instead of programming each device separately.
+
+Programs manipulate **computational fields**: distributed values that evolve across the network.
+
+<div class="keyword-line">
+  <span>spread</span><span>aggregate</span><span>converge</span><span>elect</span>
 </div>
+{{< /deck-panel >}}
+{{< /deck-grid >}}
 
-<div class="pattern-line">
-  <span>local sensing</span>
-  <span>neighbor exchange</span>
-  <span>state update</span>
-  <span>field evolution</span>
-</div>
+{{< meta-note >}}
+Devices execute local code, while the programmer reasons in terms of global coordination patterns.
+{{< /meta-note >}}
 
-{{% /col %}}
-{{% col %}}
+---
 
-### Round-based model
+# One collective program becomes an evolving computational field
 
-<div class="local-round-slide">
-  <div class="local-round-points">
-    <p><strong>Each round consists of three repeated phases:</strong></p>
-    <ol>
-      <li class="fragment" data-fragment-index="1">
-        <strong class="local-round-sense-text">Sense</strong> collect sensor inputs and incoming neighbor messages.
-      </li>
-      <li class="fragment" data-fragment-index="2">
-        <strong class="local-round-compute-text">Compute</strong> run local state evaluation logic to produce <span class="local-round-mark-teal">new state</span> and <span class="local-round-mark-green">outbound messages</span>.
-      </li>
-      <li class="fragment" data-fragment-index="3">
-        <strong class="local-round-interact-text">Interact / Act</strong> share results and affect the local environment.
-      </li>
-    </ol>
-    <p class="fragment local-round-async" data-fragment-index="4">The model does not require global lock-step.</p>
-  </div>
+{{< deck-grid columns="2" class="model-grid" >}}
+{{< deck-panel label="COLLECTIVE VIEW" title="From specification to field" class="numbered-panel" >}}
+**01 · Collective specification**<br>
+The programmer describes the behavior of the device network.
+
+**02 · Local rounds**<br>
+Each device evaluates the same program using sensors, memory, and neighbor messages.
+
+**03 · Emergent field**<br>
+The collection of local values forms the global computational field.
+{{< /deck-panel >}}
+
+{{< deck-panel label="DEVICE VIEW" title="Every round repeats three phases" class="round-panel" >}}
+1. **Sense** inputs and incoming neighbor messages.
+2. **Compute** new local state and outbound messages.
+3. **Interact / Act** by sharing results and affecting the environment.
 
 {{< local-round-loop >}}
 
-{{% /col %}}
-{{% /multicol %}}
-
-
+The model does not require global lockstep.
+{{< /deck-panel >}}
+{{< /deck-grid >}}
 
 ---
 
-# Key Idea: DPF as a Field Computation
+# Keep particle filtering standard; make coordination adaptable
 
-<p class="lead-line">The goal is <strong>not</strong> to introduce yet another DPF algorithm.</p>
+<p class="lead-line">This is not another DPF algorithm. It is a programmable coordination layer around established filtering logic.</p>
 
-<div class="idea-layout">
-  <div class="idea-side">
-    <h3>Filtering logic</h3>
-    <p>This remains standard.</p>
-    <div class="process-line">
-      <span>prediction</span>
-      <span>weighting</span>
-      <span>resampling</span>
-      <span>estimation</span>
-    </div>
-  </div>
-  <div class="idea-side is-focus">
-    <h3>Coordination choices</h3>
-    <p>These become programmable.</p>
-    <div class="process-line">
-      <span>where fusion happens</span>
-      <span>what to exchange</span>
-      <span>how information propagates</span>
-      <span>who is active</span>
-    </div>
-  </div>
-</div>
+{{< deck-grid columns="2" class="idea-grid" >}}
+{{< deck-panel label="STABLE" title="Filtering logic" >}}
+- prediction
+- weighting
+- resampling
+- estimation
+{{< /deck-panel >}}
+
+{{< deck-panel label="PROGRAMMABLE" title="Coordination choices" tone="red" >}}
+- where information is fused;
+- what information is exchanged;
+- how far information propagates;
+- which devices participate;
+- which devices take coordination roles.
+{{< /deck-panel >}}
+{{< /deck-grid >}}
 
 {{< meta-note >}}
-**Architectural assumptions become design parameters.**
+Architectural assumptions become composable choices that can evolve at runtime.
 {{< /meta-note >}}
 
 ---
 
-### Contribution 1: 
-# Aggregate measurement function
+# One field-based model supports multiple adaptive organizations
 
-<div class="contribution-layout">
-  <div class="contribution-copy">
-    <p>Each node keeps its own local particle filter.</p>
-    <p>Instead of exchanging particle sets, neighbors share raw observations; local likelihoods are combined during the weighting step.</p>
-    <p>Nearby sensors collectively behave like a <strong>distributed sensor</strong>.</p>
-  </div>
-  <div class="equation-spotlight">
-    \[
-    \hat{y}_t =
-    H_{\mathcal{N}(k)}
-    \bigl(
-    \{ h_j(x_t, v_{j,t}) \}_{j \in \mathcal{N}(k)}
-    \bigr)
-    \]
-  </div>
-</div>
+{{< deck-grid columns="2" class="contribution-grid" >}}
+{{< deck-panel label="CONTRIBUTION 01" title="DPF as a self-organizing collective process" >}}
+- **Self-organization** through local neighborhood interactions
+- **Self-healing** through runtime role reassignment after failures
+- **Self-adaptation** to target motion and changing spatial conditions
+{{< /deck-panel >}}
+
+{{< deck-panel label="CONTRIBUTION 02" title="One model, multiple DPF organizations" tone="red" >}}
+- neighborhood-level measurement aggregation
+- leader-based fusion with dynamic leader election
+- decentralized estimation with fixed or mobile observers
+- adaptive spatial participation and coordination regions
+{{< /deck-panel >}}
+{{< /deck-grid >}}
 
 {{< meta-note >}}
-<strong>Intuition:</strong> more neighbors provide richer local observations, so the aggregated measurement becomes more informative; with few neighbors, the estimate remains weaker and less stable.
+The filtering logic remains constant; the collective reorganizes around it.
 {{< /meta-note >}}
-
----
-
-### Contribution 2: 
-# Self-Healing Fusion Center
-
-<div class="healing-layout">
-  <div class="takeaway-editorial">
-    <h2>Leader-based fusion as a field-level behavior</h2>
-    <div class="takeaway-line">
-      <span>01</span>
-      <p><strong>Election.</strong> A leader is selected dynamically.</p>
-    </div>
-    <div class="takeaway-line">
-      <span>02</span>
-      <p><strong>Fusion.</strong> The leader behaves as the current fusion center.</p>
-    </div>
-    <div class="takeaway-line is-critical">
-      <span>03</span>
-      <p><strong>Failure.</strong> If the leader disappears, the role is reassigned.</p>
-    </div>
-    <div class="takeaway-line">
-      <span>04</span>
-      <p><strong>Self-healing.</strong> A new leader resumes the behavior.</p>
-    </div>
-  </div>
-  <div class="healing-statement">
-    <p>Configuration lets us move along the spectrum between centralized simplicity and decentralized robustness.</p>
-  </div>
-</div>
 
 ---
 
@@ -402,147 +257,176 @@ The particle cloud follows the target while keeping the estimation error visible
     <div class="metric-band">
       <span class="metric-pill">Alchemist Simulator</span>
       <span class="metric-pill">Collektive DSL</span>
-      <span class="metric-pill">2D target tracking</span>
-      <span class="metric-pill">25 sensors</span>
-      <span class="metric-pill">3000 simulated seconds</span>
-      <span class="metric-pill">100 seeds</span>
+      <span class="metric-pill">2D environment</span>
+      <span class="metric-pill">24 sensors</span>
+      <span class="metric-pill">3 moving targets</span>
+      <span class="metric-pill">50 seeds · 1 Hz</span>
     </div>
-    <p>Each sensor observes the target through a radio-like signal: closer targets produce stronger, cleaner evidence; farther targets produce weaker and noisier evidence.</p>
-    <p>Not all sensors are equally informative at every time step.</p>
+    <p>Target trajectories derive from the <strong>KABR wildlife telemetry dataset</strong>.</p>
+    <p>Each target emits a radio-like signal: closer sensors receive stronger, cleaner evidence; farther sensors receive weaker, noisier evidence.</p>
   </div>
   <div class="eval-configs">
     <h3>Evaluated configurations</h3>
     <div class="config-row">
       <span class="config-index">1</span>
-      <div><strong>Local PF + aggregated measurements</strong><br>each sensor has its own PF; only measurements are shared.</div>
+      <div><strong>Neighborhood measurement aggregation</strong><br>Each sensor runs a local PF; only measurements are shared.</div>
     </div>
     <div class="config-row is-critical">
       <span class="config-index">2</span>
-      <div><strong>Elected leader as fusion center</strong><br>measurements converge to a leader; failure is injected at time step 1500.</div>
+      <div><strong>Leader-based fusion</strong><br>Measurements converge toward an elected, replaceable leader.</div>
+    </div>
+    <div class="config-row">
+      <span class="config-index">3</span>
+      <div><strong>Mobile sensing infrastructure</strong><br>Sensors reorganize spatially around the moving targets.</div>
     </div>
   </div>
 </div>
 
-<img alt="experiment setup" src="./images/experiment.gif" width="30%"/>
+<img alt="Experimental setup" src="./images/dpf.gif" width="30%">
 
 ---
 
-## Experiment 1: AGGREGATE MEASUREMENT FUNCTION
+# Experiment 1: neighborhood sharing improves local estimates
 
-<div class="experiment-brief">
-  <div>
-    <p>Each sensor keeps its <strong>own local particle filter</strong>. No particles are exchanged.</p>
-  </div>
-  <div class="experiment-equation">$$|\mathcal{N}| \in \{0, 1, 4, 7\}$$</div>
-  <div>
-    <p><strong>Small neighborhood</strong> → weak evidence → high error</p>
-    <p><strong>Larger neighborhood</strong> → aggregated evidence → better tracking</p>
-  </div>
-</div>
+{{< deck-grid columns="3" class="experiment-setup-grid" >}}
+{{< deck-panel label="MECHANISM" title="Local filters, shared evidence" >}}
+Each sensor runs its **own multi-target particle filter**.
 
-<div class="plot-card">
-  <img src="./images/trajectories.png" style="width: 76%;">
-</div>
+Sensors exchange target-indexed measurements—not particle sets—and combine neighbor observations in the likelihood computation.
 
----
+$$|\mathcal{N}| \in \{0, 1, 4, 7\}$$
+{{< /deck-panel >}}
 
-## Experiment 1 results: RMSE
+{{< deck-panel label="FEW NEIGHBORS" title="Sparse evidence" tone="red" >}}
+Limited spatial information produces poor convergence and unstable estimates.
+{{< /deck-panel >}}
 
-{{% multicol %}}
-{{% col %}}
+{{< deck-panel label="MORE NEIGHBORS" title="Richer evidence" >}}
+Aggregated measurements improve tracking accuracy and stability.
+{{< /deck-panel >}}
+{{< /deck-grid >}}
 
-<div class="plot-card">
-  <img src="./images/rmse.png" style="width: 100%;">
-</div>
+{{< deck-figure src="./images/three_zebras_by_number_of_neighbors.png" alt="Multi-target trajectories for different neighborhood sizes" class="wide-results-figure" >}}
 
-{{% /col %}}
-{{% col %}}
-
-- RMSE measures the distance between the estimated target position and the real one.
-- With few neighbors, the error remains high.
-- Increasing $|\mathcal{N}|$ reduces RMSE and improves long-term stability.
-- The benefit comes from sharing **measurements**, not particle sets.
-
-{{% /col %}}
-{{% /multicol %}}
+{{< meta-note >}}
+Neighborhood size becomes an explicit coordination parameter.
+{{< /meta-note >}}
 
 ---
 
-## Experiment 2: Self-Healing Fusion
+# Measurement sharing sharply reduces tracking error
 
-<div class="exp2-layout">
-  <div class="exp2-copy">
-    <p>An elected leader plays the fusion-center role. At time step <strong>1500</strong>, the leader fails.</p>
-    <div class="takeaway-line">
-      <span>01</span>
-      <p>Transient during initial leader election</p>
-    </div>
-    <div class="takeaway-line">
-      <span>02</span>
-      <p>Convergence to a valid estimation</p>
-    </div>
-    <div class="takeaway-line is-critical">
-      <span>03</span>
-      <p>Transient after leader failure</p>
-    </div>
-    <div class="takeaway-line">
-      <span>04</span>
-      <p>Resumed tracking after re-election</p>
-    </div>
-    <p>Fusion-center behavior can be retained without a permanently fixed center.</p>
-  </div>
-  <div class="plot-card">
-    <img src="./images/trajectories-fc-based.png" style="width: 82%;">
-    <div class="plot-caption">The <span class="accent-red">red line</span> marks the failure; the following deviation is the temporary tracking error caused by reconfiguration.</div>
-  </div>
-</div>
+{{< deck-grid columns="2" class="results-grid" >}}
+{{< deck-figure src="./images/RMSE.png" alt="RMSE results for different neighborhood sizes" caption="RMSE by neighborhood size across the simulation campaign." class="results-figure" >}}
 
---- 
+{{< deck-panel label="RESULT" title="Cooperation improves accuracy" >}}
+- With little or no sharing, local filters may remain inaccurate or fail to converge.
+- Increasing $|\mathcal{N}|$ reduces RMSE and improves stability.
+- Particle sets remain local; only measurements are exchanged.
+- Larger neighborhoods trade communication for estimation quality.
+{{< /deck-panel >}}
+{{< /deck-grid >}}
 
-# Takeaways and Future Work
+{{< meta-note >}}
+Local cooperation supports decentralized multi-target tracking without a fusion center.
+{{< /meta-note >}}
 
-<div class="closing-layout">
-  <div class="takeaway-editorial">
-    <h2>Takeaways</h2>
-    <div class="takeaway-line">
-      <span>-</span>
-      <p><strong>DPF as field computation.</strong> Filtering stays standard; coordination becomes programmable.</p>
-    </div>
-    <div class="takeaway-line">
-      <span>-</span>
-      <p><strong>Flexible architectures.</strong> Fusion, dissemination, and active regions become configurable choices.</p>
-    </div>
-    <div class="takeaway-line">
-      <span>-</span>
-      <p><strong>Local likelihood aggregation works.</strong> Sharing observations improves tracking without exchanging particle sets.</p>
-    </div>
-    <div class="takeaway-line is-critical">
-      <span>-</span>
-      <p><strong>Fusion can self-heal.</strong> Leader election preserves fusion-center behavior after failures.</p>
-    </div>
-  </div>
-  <div class="future-panel">
-    <h2>Future work</h2>
-    <div class="future-group">
-      <h3>Explore more AC design dimensions</h3>
-      <p>Broader coordination strategies for propagation and fusion; activation only in relevant regions.</p>
-    </div>
-    <div class="future-group">
-      <h3>Extend the scenarios</h3>
-      <p>Multiple moving targets, flocking-inspired coordination, heterogeneous sensing, and richer deployment conditions.</p>
-    </div>
-  </div>
-</div>
+---
 
---- 
+# Experiment 2: the fusion role survives leader failure
 
-# Thank you for your attention!
+{{< deck-grid columns="2" class="experiment-grid" >}}
+{{< deck-panel label="SELF-HEALING SEQUENCE" title="Elect, fuse, fail, recover" class="numbered-panel" >}}
+**01 · Election**<br>
+A geometrically central active sensor becomes leader.
+
+**02 · Fusion**<br>
+Measurements converge toward the leader.
+
+**03 · Failure**<br>
+The current leader is removed during execution.
+
+**04 · Recovery**<br>
+A new leader is elected; tracking resumes after a short transient.
+{{< /deck-panel >}}
+
+{{< deck-figure src="./images/three_zebras_fc_failure.png" alt="Leader-based tracking before and after fusion-center failure" class="experiment-figure" >}}
+{{< /deck-grid >}}
+
+{{< meta-note >}}
+The fusion-center role persists even when the device holding that role does not.
+{{< /meta-note >}}
+
+---
+
+# Experiment 3: mobile sensors preserve informative observations
+
+{{< deck-grid columns="2" class="experiment-grid mobile-grid" >}}
+{{< deck-panel label="SELF-ADAPTIVE MOBILITY" title="The infrastructure follows the targets" >}}
+- Every sensor continues to run a local multi-target particle filter.
+- Filtering remains decentralized.
+- A temporary coordinator manages motion only.
+- Sensors preserve a grid-like formation.
+- The formation centroid follows the estimated target centroid.
+
+Keeping sensors near the targets produces more informative measurements and lower estimation error.
+{{< /deck-panel >}}
+
+{{< deck-figure src="./images/sensors_zebras_movement.png" alt="Mobile sensors reorganizing around three moving targets" class="mobile-figure" >}}
+{{< /deck-grid >}}
+
+---
+
+# The same formulation enables three self-* properties
+
+{{< deck-grid columns="3" class="outcome-grid" >}}
+{{< deck-panel label="01" title="Self-organization" >}}
+Neighborhood interactions improve estimation without central coordination.
+{{< /deck-panel >}}
+
+{{< deck-panel label="02" title="Self-healing" tone="red" >}}
+A failed fusion leader is replaced at runtime while the collective behavior persists.
+{{< /deck-panel >}}
+
+{{< deck-panel label="03" title="Self-adaptation" >}}
+Mobile observers reorganize as the tracked targets move.
+{{< /deck-panel >}}
+{{< /deck-grid >}}
+
+{{< meta-note >}}
+The key result is not one DPF configuration, but multiple adaptive organizations emerging from one field-based formulation.
+{{< /meta-note >}}
+
+---
+
+# Field-based DPF separates estimation from coordination
+
+{{< deck-grid columns="2" class="closing-grid" >}}
+{{< deck-panel label="TAKEAWAYS" title="What the work establishes" >}}
+- DPF becomes a **self-organizing collective process**.
+- One estimation substrate supports multiple organizations.
+- Local cooperation, leader replacement, and mobile observers expose three self-* properties.
+- Neighborhood size, connectivity, and spatial configuration shape estimation quality.
+{{< /deck-panel >}}
+
+{{< deck-panel label="NEXT" title="Future work" tone="red" >}}
+- spatially adaptive filtering and selective activation
+- self-organizing coordination regions
+- larger target populations
+- richer deployment conditions
+- heterogeneous sensing modalities
+- accuracy, communication, resilience, and scalability trade-offs
+{{< /deck-panel >}}
+{{< /deck-grid >}}
+
+---
+
+# Thank you for the attention!
 
 {{% spacer %}}
 
 ### Reproducible experiments here:
 
-<div class="insight-card" style="max-width: 58%; margin: 0 auto;">
-  {{< qrcode data="https://github.com/domm99/experiments-ac-based-distributed-particle-filtering" width=240 height=240 dotsColor="theme" backgroundColor="transparent" >}}
-  <p><i class="fab fa-github mr-3" style="color: #095aa6;"></i> <a href="https://github.com/domm99/experiments-ac-based-distributed-particle-filtering">domm99/experiments-ac-based-distributed-particle-filtering</a></p>
-</div>
+{{< deck-figure src="./images/qrcode.png" alt="QR code for the experiment repository" class="qr-figure" >}}
+
+**[domm99/experiments-acsos-2026-DPF-multi-object-tracking](https://github.com/domm99/experiments-acsos-2026-DPF-multi-object-tracking)**

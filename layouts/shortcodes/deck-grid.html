@@ -1,0 +1,5 @@
+{{ $columns := .Get "columns" | default "2" }}
+{{ $class := .Get "class" }}
+<div class="deck-grid deck-grid-{{ $columns }}{{ with $class }} {{ . }}{{ end }}">
+  {{ .Inner }}
+</div>

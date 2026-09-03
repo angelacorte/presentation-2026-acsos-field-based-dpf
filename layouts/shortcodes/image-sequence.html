@@ -1,0 +1,4 @@
+{{ $columns := .Get "columns" | default "4" }}
+<div class="image-sequence image-sequence-{{ $columns }}">
+  {{ .Inner }}
+</div>

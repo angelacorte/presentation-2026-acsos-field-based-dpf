@@ -96,11 +96,11 @@ section.has-light-background {
 }
 
 p.fragment.fade-out {
-    transition: opacity 0.5s ease; /* Transizione per la scomparsa */
+    transition: opacity 0.5s ease; /* Fade the paragraph smoothly. */
 }
 
 .reveal .fragment.visible p.fragment.fade-out {
-    opacity: 0; /* Scompare il paragrafo */
+    opacity: 0; /* Hide the paragraph once the fragment is visible. */
 }
 
 
@@ -313,7 +313,7 @@ kbd {
 }
 
 .reveal .slide-background:after {
-	content: "Cortecchia A. et Al - Multi-Target Tracking via Field-Based Distributed Particle Filtering || @ACSOS 2026";
+	content: "Cortecchia A. et al. · Multi-Target Tracking via Field-Based Distributed Particle Filtering · ACSOS 2026";
 	position: absolute;
 	bottom: 2.5%;
 	right: 6%;
@@ -1592,7 +1592,7 @@ html.blur-animation-light .backgrounds {
 }
 
 .reveal .eval-layout .metric-band {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.38rem;
   margin: 0 0 0.7rem;
 }
@@ -2204,4 +2204,405 @@ html.blur-animation-light .backgrounds {
   margin: 0.35rem auto 0;
   text-align: center;
   font-size: 0.52em;
+}
+
+// Editorial slide system
+
+.reveal .slides section {
+  box-sizing: border-box;
+  padding: 0.35rem 1rem 1.1rem;
+}
+
+.reveal .slides section > h1 {
+  max-width: 92%;
+  margin: 0 auto 0.72rem;
+  color: $deepBlue;
+  font-size: 1.48em;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+}
+
+.reveal .slides section > h3 {
+  margin: -0.3rem auto 0.75rem;
+  color: $mutedInk;
+  font-size: 0.78em;
+  font-weight: 500;
+}
+
+.reveal .slides section:first-child > h1 {
+  max-width: 84%;
+  margin-top: 1.2rem;
+  color: $deepBlue;
+  font-size: 1.72em;
+  line-height: 1.04;
+}
+
+.reveal .deck-grid {
+  display: grid;
+  gap: 1.35rem;
+  width: 90%;
+  margin: 0.45rem auto;
+  align-items: center;
+  text-align: left;
+}
+
+.reveal .deck-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.reveal .deck-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.reveal .deck-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.reveal .deck-panel {
+  align-self: stretch;
+  box-sizing: border-box;
+  padding: 0.8rem 0.35rem 0.45rem;
+  border-top: 0.18rem solid rgba(57, 167, 238, 0.72);
+  text-align: left;
+}
+
+.reveal .deck-panel.is-red {
+  border-top-color: rgba(187, 46, 41, 0.78);
+}
+
+.reveal .deck-panel-label {
+  margin-bottom: 0.28rem;
+  color: $headingColor;
+  font-size: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.reveal .deck-panel.is-red .deck-panel-label,
+.reveal .deck-panel.is-red .deck-panel-title {
+  color: $uniboRed;
+}
+
+.reveal .deck-panel-title {
+  margin: 0 0 0.55rem;
+  color: $deepBlue;
+  font-size: 0.92em;
+  line-height: 1.05;
+}
+
+.reveal .deck-panel-body {
+  color: $mainColor;
+  font-size: 0.72em;
+  line-height: 1.16;
+}
+
+.reveal .deck-panel-body p {
+  margin: 0 0 0.48rem;
+}
+
+.reveal .deck-panel-body ul,
+.reveal .deck-panel-body ol {
+  margin: 0.2rem 0 0 1.05rem;
+}
+
+.reveal .deck-panel-body li {
+  margin: 0.22rem 0;
+}
+
+.reveal .deck-panel-body mjx-container[jax="SVG"][display="true"] {
+  margin: 0.6rem 0 !important;
+}
+
+.reveal .deck-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.reveal .deck-figure img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 13.3rem;
+  margin: 0 auto;
+  border-radius: 0.35rem;
+}
+
+.reveal .deck-figure figcaption {
+  margin-top: 0.45rem;
+  color: $mutedInk;
+  font-size: 0.62em;
+  line-height: 1.14;
+}
+
+.reveal .hero-figure img {
+  width: 100%;
+  max-height: 12.2rem;
+  object-fit: cover;
+  object-position: center;
+}
+
+.reveal .particle-figure img {
+  max-height: 11.6rem;
+}
+
+.reveal .image-sequence {
+  display: grid;
+  gap: 0.7rem;
+  width: 94%;
+  margin: 0.65rem auto 0;
+  align-items: start;
+}
+
+.reveal .image-sequence-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.reveal .image-step {
+  min-width: 0;
+  margin: 0;
+  padding-top: 0.45rem;
+  border-top: 0.15rem solid rgba(57, 167, 238, 0.55);
+  text-align: left;
+}
+
+.reveal .image-step img {
+  display: block;
+  width: 100%;
+  height: 10.2rem;
+  max-height: 10.2rem;
+  margin: 0;
+  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.78);
+  object-fit: contain;
+}
+
+.reveal .image-step-title {
+  margin-top: 0.38rem;
+  color: $deepBlue;
+  font-size: 0.72em;
+  font-weight: 700;
+}
+
+.reveal .image-step figcaption {
+  margin-top: 0.12rem;
+  color: $mutedInk;
+  font-size: 0.56em;
+  line-height: 1.08;
+}
+
+.reveal .meta-note {
+  display: table;
+  width: auto;
+  max-width: 82%;
+  margin: 1rem auto 0;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(57, 167, 238, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: none;
+  font-size: 0.7em;
+  line-height: 1.12;
+}
+
+.reveal .comparison-grid,
+.reveal .idea-grid,
+.reveal .contribution-grid,
+.reveal .closing-grid {
+  align-items: stretch;
+  margin-top: 1.2rem;
+}
+
+.reveal .motivation-grid,
+.reveal .pf-intro-grid,
+.reveal .ac-overview-grid,
+.reveal .model-grid,
+.reveal .experiment-grid,
+.reveal .results-grid {
+  grid-template-columns: 0.92fr 1.08fr;
+}
+
+.reveal .keyword-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.8rem;
+  margin-top: 0.72rem;
+}
+
+.reveal .keyword-line span {
+  padding-bottom: 0.12rem;
+  border-bottom: 0.1rem solid rgba(57, 167, 238, 0.62);
+  color: $deepBlue;
+  font-weight: 700;
+}
+
+.reveal .numbered-panel .deck-panel-body p,
+.reveal .process-panel .deck-panel-body p,
+.reveal .experiment-list .deck-panel-body p {
+  padding: 0 0 0.38rem;
+  border-bottom: 1px solid rgba(6, 63, 114, 0.11);
+}
+
+.reveal .model-grid {
+  align-items: stretch;
+}
+
+.reveal .round-panel .local-round-loop {
+  min-height: 7.4rem;
+  margin: 0.45rem auto;
+  aspect-ratio: 1.9;
+}
+
+.reveal .round-panel .deck-panel-body > p:last-child {
+  margin-top: 0.3rem;
+  color: $mutedInk;
+  font-size: 0.86em;
+}
+
+.reveal .evaluation-grid {
+  align-items: stretch;
+  margin-top: 0.65rem;
+}
+
+.reveal .evaluation-grid .deck-panel-body {
+  font-size: 0.62em;
+}
+
+.reveal .evaluation-figure {
+  margin-top: 0.35rem;
+}
+
+.reveal .evaluation-figure img {
+  max-height: 11rem;
+}
+
+.reveal .experiment-setup-grid {
+  align-items: stretch;
+  margin-top: 1.2rem;
+}
+
+.reveal .experiment-setup-grid .deck-panel:first-child {
+  grid-column: span 1;
+}
+
+.reveal .experiment-setup-grid .deck-panel-body,
+.reveal .outcome-grid .deck-panel-body {
+  font-size: 0.66em;
+}
+
+.reveal .results-grid {
+  grid-template-columns: 1.15fr 0.85fr;
+}
+
+.reveal .results-figure img {
+  max-height: 13rem;
+}
+
+.reveal .wide-results-figure img {
+  width: 100%;
+  max-height: 13rem;
+}
+
+.reveal .mobile-figure img {
+  max-height: 18rem;
+}
+
+.reveal .outcome-grid {
+  align-items: stretch;
+  margin-top: 1.5rem;
+}
+
+.reveal .closing-grid .deck-panel-body {
+  font-size: 0.69em;
+}
+
+.reveal .closing-lead {
+  margin: 0.15rem auto 0.65rem !important;
+  color: $mutedInk;
+  font-size: 0.78em;
+}
+
+.reveal .qr-figure img {
+  width: 9.2rem;
+  height: 9.2rem;
+  border-radius: 0;
+}
+
+@media (max-width: 900px) {
+  .reveal .deck-grid-2,
+  .reveal .deck-grid-3,
+  .reveal .deck-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .reveal .image-sequence-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+// Compact taxonomy used by the distributed-filtering overview.
+
+.reveal .pf-taxonomy {
+  display: grid;
+  gap: 0.42rem;
+  width: 72%;
+  max-width: 46rem;
+  margin: 0.55rem auto 0;
+  overflow: hidden;
+  font-size: 0.54em;
+}
+
+.reveal .pf-taxonomy-root {
+  width: 10rem;
+  min-height: 1.9rem;
+  margin: 0 auto;
+  color: white;
+  background: $deepBlue;
+}
+
+.reveal .pf-taxonomy-level {
+  display: grid;
+  grid-template-columns: 0.68fr 1.32fr;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.reveal .pf-taxonomy-group {
+  display: grid;
+  gap: 0.36rem;
+  padding-top: 0.28rem;
+  border-top: 0.12rem solid rgba(6, 63, 114, 0.25);
+}
+
+.reveal .pf-taxonomy-group.is-featured {
+  border-top-color: rgba(187, 46, 41, 0.55);
+}
+
+.reveal .pf-taxonomy-children {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.36rem;
+}
+
+.reveal .pf-taxonomy-children.is-nested {
+  margin-left: 34%;
+}
+
+.reveal .pf-taxonomy-node {
+  min-height: 1.65rem;
+  padding: 0.24rem 0.35rem;
+  border: 1px solid rgba(6, 63, 114, 0.17);
+  border-radius: 0.22rem;
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.76);
+  font-size: 0.88em;
+}
+
+.reveal .pf-taxonomy .pf-taxonomy-root {
+  color: white;
+  background: $deepBlue;
 }

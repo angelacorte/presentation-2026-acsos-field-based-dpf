@@ -1,0 +1,11 @@
+{{ $title := .Get "title" }}
+{{ $label := .Get "label" }}
+{{ $tone := .Get "tone" | default "blue" }}
+{{ $class := .Get "class" }}
+<div class="deck-panel is-{{ $tone }}{{ with $class }} {{ . }}{{ end }}">
+  {{ with $label }}<div class="deck-panel-label">{{ . }}</div>{{ end }}
+  {{ with $title }}<h3 class="deck-panel-title">{{ . }}</h3>{{ end }}
+  <div class="deck-panel-body">
+    {{ .Inner | markdownify }}
+  </div>
+</div>

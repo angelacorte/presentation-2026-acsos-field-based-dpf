@@ -1,0 +1,8 @@
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" | default "Presentation figure" }}
+{{ $caption := .Get "caption" }}
+{{ $class := .Get "class" }}
+<figure class="deck-figure{{ with $class }} {{ . }}{{ end }}">
+  <img src="{{ $src }}" alt="{{ $alt }}">
+  {{ with $caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>
