@@ -2492,20 +2492,29 @@ html.blur-animation-light .backgrounds {
 }
 
 .reveal .results-grid {
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 1.25fr 0.75fr;
 }
 
 .reveal .results-figure img {
-  max-height: 13rem;
+  max-height: 18rem;
 }
 
 .reveal .wide-results-figure img {
-  width: 100%;
-  max-height: 13rem;
+  width: 108%;
+  max-width: 108%;
+  max-height: 21rem;
+}
+
+.reveal .experiment-grid {
+  grid-template-columns: 0.82fr 1.18fr;
+}
+
+.reveal .experiment-figure img {
+  max-height: 24rem;
 }
 
 .reveal .mobile-figure img {
-  max-height: 18rem;
+  max-height: 24rem;
 }
 
 .reveal .outcome-grid {
