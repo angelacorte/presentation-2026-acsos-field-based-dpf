@@ -29,7 +29,7 @@
 
 //$backgroundColor: rgba(242, 248, 252, 0.58);
 //$backgroundColor: #EFF1ED;
-$backgroundColor: #f3f8fc;
+$backgroundColor: #ffffff;
 
 $mainColor: #102f47;
 $headingColor: #0b75c9;
@@ -1020,13 +1020,10 @@ html.blur-animation-light .backgrounds {
 
 .reveal .slide-background {
   background-color: $backgroundColor;
-  background-image:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(223, 242, 255, 0.34) 46%, rgba(255, 255, 255, 0.65)),
-    linear-gradient(180deg, rgba(6, 63, 114, 0.04), rgba(57, 167, 238, 0.08)),
-    $logo;
-  background-repeat: no-repeat, no-repeat, no-repeat;
-  background-position: center, center, 0.45% 99.2%;
-  background-size: 100% 100%, 100% 100%, 15%;
+  background-image: $logo;
+  background-repeat: no-repeat;
+  background-position: 0.45% 99.2%;
+  background-size: 15%;
 }
 
 .reveal .deck-title-accent,
