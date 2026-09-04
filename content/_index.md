@@ -25,28 +25,25 @@ Alma Mater Studiorum — University of Bologna, Cesena, Italy*</span>
 
 ---
 
-# The estimator must adapt while the sensing system changes
+# Motivation: distributed estimation in changing environments
 
 {{< deck-grid columns="2" class="motivation-grid" >}}
-{{< deck-panel label="WHY IT MATTERS" title="Hidden states, partial evidence" >}}
-Cyber-physical systems estimate a **hidden dynamical state** from distributed, noisy observations.
+{{< deck-panel label="WHY IT MATTERS" title="Distributed evidence, changing infrastructure" >}}
+Many cyber-physical systems estimate a **hidden dynamical state** from distributed, noisy observations.
 
-Target tracking, environmental monitoring, robotic coordination, and cyber-physical control all share this challenge.
+But the sensing system changes too:
 
-But the sensing system is dynamic too:
-
-- devices join, leave, move, or fail;
-- topology and connectivity change;
-- sensing quality and observability vary;
+- devices move, fail, or disconnect;
+- topology and observability vary;
 - different devices become relevant over time.
-{{< /deck-panel >}}
+  {{< /deck-panel >}}
 
 <img alt="Gemini_Generated_Image_y0tp7fy0tp7fy0tp.jpg" src="images/Gemini_Generated_Image_y0tp7fy0tp7fy0tp.jpg" width="80%"/>
 
 {{< /deck-grid >}}
 
 {{< meta-note >}}
-**Challenge:** maintain a coherent collective estimate while the organization producing it keeps changing.
+**Challenge:** keep the estimate reliable while the organization producing it changes.
 {{< /meta-note >}}
 
 ---
@@ -429,4 +426,4 @@ The key result is not one DPF configuration, but multiple adaptive organizations
 
 {{< deck-figure src="./images/qrcode.png" alt="QR code for the experiment repository" class="qr-figure" >}}
 
-**[domm99/experiments-acsos-2026-DPF-multi-object-tracking](https://github.com/domm99/experiments-acsos-2026-DPF-multi-object-tracking)**
+GitHub: <i class="fa-brands fa-github"></i> **[domm99/experiments-acsos-2026-DPF-multi-object-tracking](https://github.com/domm99/experiments-acsos-2026-DPF-multi-object-tracking)**
