@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/css/custom-theme.min.b303001e4664ddad1dc3197555f20f9b2dcc351132c08a10d196223e047bbff2.css" id="theme"><link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/highlight-js/solarized-dark.min.css">
+  <link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/css/custom-theme.min.0838cf946d49c99a5289cb61fd67edc2911ef9a232f5823e03facab34bc343ce.css" id="theme"><link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/highlight-js/solarized-dark.min.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
@@ -100,9 +100,91 @@ Alma Mater Studiorum — University of Bologna, Cesena, Italy</em></span></p>
 </div>
 
 
-<div class="pf-visual">
-<img src="./images/particles-distribution/step_0.png">
-<p><strong>The estimate is a distribution, not only a point.</strong></p>
+<div class="pf-visual pf-loop-visual">
+<div class="pf-loop" aria-label="One particle-filter iteration: predict, weight, resample, estimate">
+<svg viewBox="0 0 600 352" class="pf-loop-svg" role="img">
+  <defs>
+    <marker id="pfArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" class="pf-loop-arrowhead"></path>
+    </marker>
+    <marker id="pfArrowInit" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" class="pf-loop-arrowhead-init"></path>
+    </marker>
+    <marker id="pfArrowReturn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" class="pf-loop-arrowhead-return"></path>
+    </marker>
+  </defs>
+
+  
+  <text x="14" y="52" class="pf-loop-step"><tspan class="pf-loop-num">01</tspan> Predict</text>
+  <text x="14" y="68" class="pf-loop-substep">t − 1 → t</text>
+  <text x="172" y="18" class="pf-loop-init-label">initial belief · t = 0</text>
+  <line x1="176" y1="30" x2="200" y2="34" class="pf-loop-init" marker-end="url(#pfArrowInit)"></line>
+  <g class="pf-loop-ghosts">
+    <circle cx="214" cy="36" r="5.5"></circle><circle cx="246" cy="36" r="5.5"></circle>
+    <circle cx="274" cy="36" r="5.5"></circle><circle cx="300" cy="36" r="5.5"></circle>
+    <circle cx="328" cy="36" r="5.5"></circle><circle cx="358" cy="36" r="5.5"></circle>
+  </g>
+  <g class="pf-loop-shift">
+    <line x1="216" y1="44" x2="232" y2="54" marker-end="url(#pfArrow)"></line>
+    <line x1="248" y1="44" x2="268" y2="54" marker-end="url(#pfArrow)"></line>
+    <line x1="276" y1="44" x2="300" y2="54" marker-end="url(#pfArrow)"></line>
+    <line x1="302" y1="44" x2="332" y2="54" marker-end="url(#pfArrow)"></line>
+    <line x1="330" y1="44" x2="364" y2="54" marker-end="url(#pfArrow)"></line>
+    <line x1="360" y1="44" x2="400" y2="54" marker-end="url(#pfArrow)"></line>
+  </g>
+  <line x1="168" y1="64" x2="500" y2="64" class="pf-loop-axis"></line>
+  <g class="pf-loop-particles">
+    <circle cx="236" cy="64" r="7.5"></circle><circle cx="272" cy="64" r="7.5"></circle>
+    <circle cx="304" cy="64" r="7.5"></circle><circle cx="336" cy="64" r="7.5"></circle>
+    <circle cx="368" cy="64" r="7.5"></circle><circle cx="404" cy="64" r="7.5"></circle>
+  </g>
+
+  
+  <text x="14" y="150" class="pf-loop-step"><tspan class="pf-loop-num">02</tspan> Weight</text>
+  <path d="M 226 146 C 276 146, 290 118, 318 118 C 346 118, 360 146, 410 146" class="pf-loop-likelihood"></path>
+  <line x1="168" y1="146" x2="500" y2="146" class="pf-loop-axis"></line>
+  <line x1="318" y1="115" x2="318" y2="166" class="pf-loop-obs"></line>
+  <text x="318" y="107" class="pf-loop-obs-label">observation</text>
+  <g class="pf-loop-particles">
+    <circle cx="236" cy="146" r="5"></circle><circle cx="272" cy="146" r="9"></circle>
+    <circle cx="304" cy="146" r="15"></circle><circle cx="336" cy="146" r="13"></circle>
+    <circle cx="368" cy="146" r="8"></circle><circle cx="404" cy="146" r="4.5"></circle>
+  </g>
+
+  
+  <text x="14" y="226" class="pf-loop-step"><tspan class="pf-loop-num">03</tspan> Resample</text>
+  <line x1="168" y1="222" x2="500" y2="222" class="pf-loop-axis"></line>
+  <g class="pf-loop-particles">
+    <circle cx="288" cy="215" r="8"></circle><circle cx="302" cy="229" r="8"></circle>
+    <circle cx="310" cy="215" r="8"></circle><circle cx="320" cy="230" r="8"></circle>
+    <circle cx="330" cy="215" r="8"></circle><circle cx="344" cy="228" r="8"></circle>
+  </g>
+
+  
+  <text x="14" y="296" class="pf-loop-step"><tspan class="pf-loop-num">04</tspan> Estimate</text>
+  <line x1="168" y1="292" x2="500" y2="292" class="pf-loop-axis"></line>
+  <g class="pf-loop-particles pf-loop-particles-faded">
+    <circle cx="288" cy="286" r="7"></circle><circle cx="302" cy="298" r="7"></circle>
+    <circle cx="310" cy="286" r="7"></circle><circle cx="320" cy="299" r="7"></circle>
+    <circle cx="330" cy="286" r="7"></circle><circle cx="344" cy="297" r="7"></circle>
+  </g>
+  <g class="pf-loop-spread">
+    <line x1="280" y1="318" x2="352" y2="318"></line>
+    <line x1="280" y1="312" x2="280" y2="324"></line>
+    <line x1="352" y1="312" x2="352" y2="324"></line>
+  </g>
+  <text x="362" y="322" class="pf-loop-note">spread = uncertainty</text>
+  <path d="M 316 282 L 323 292 L 316 302 L 309 292 z" class="pf-loop-estimate"></path>
+  <text x="316" y="272" class="pf-loop-estimate-label">estimate</text>
+
+  
+  <path d="M 508 292 C 558 292, 558 64, 512 64" class="pf-loop-return" marker-end="url(#pfArrowReturn)"></path>
+  <text x="0" y="0" class="pf-loop-return-label" transform="translate(580 178) rotate(-90)">next round</text>
+</svg>
+</div>
+
+<p><strong>One iteration: the belief is transformed, never collapsed to a point.</strong></p>
 </div>
 
 
@@ -374,11 +456,11 @@ The collection of local values forms the global computational field.</p>
 </div>
 
 </section><section>
-<h1 id="keep-particle-filtering-standard-make-coordination-adaptable">Keep particle filtering standard; make coordination adaptable</h1>
-<p class="lead-line">This is not another DPF algorithm. It is a programmable coordination layer around established filtering logic.</p>
+<h1 id="keep-filtering-standard-make-coordination-adaptable">Keep filtering standard; make coordination adaptable</h1>
+<p class="lead-line">This is not another DPF algorithm. It is a programmable coordination layer that turns DPF into a <strong>self-organizing collective process</strong>.</p>
 
 
-<div class="deck-grid deck-grid-2 idea-grid">
+<div class="deck-grid deck-grid-3 idea-grid">
   
 
 
@@ -409,8 +491,8 @@ The collection of local values forms the global computational field.</p>
   <div class="deck-panel-body">
     <ul>
 <li>where information is fused;</li>
-<li>what information is exchanged;</li>
-<li>how far information propagates;</li>
+<li>what is exchanged;</li>
+<li>how far it propagates;</li>
 <li>which devices participate;</li>
 <li>which devices take coordination roles.</li>
 </ul>
@@ -419,49 +501,19 @@ The collection of local values forms the global computational field.</p>
 </div>
 
 
-</div>
-
-<div class="meta-note">
-  Architectural assumptions become composable choices that can evolve at runtime.
-</div>
-
-</section><section>
-<h1 id="one-field-based-model-supports-multiple-adaptive-organizations">One field-based model supports multiple adaptive organizations</h1>
-
-
-<div class="deck-grid deck-grid-2 contribution-grid">
-  
 
 
 
 
 <div class="deck-panel is-blue">
-  <div class="deck-panel-label">CONTRIBUTION 01</div>
-  <h3 class="deck-panel-title">DPF as a self-organizing collective process</h3>
+  <div class="deck-panel-label">RESULT</div>
+  <h3 class="deck-panel-title">One model, many organizations</h3>
   <div class="deck-panel-body">
     <ul>
-<li><strong>Self-organization</strong> through local neighborhood interactions</li>
-<li><strong>Self-healing</strong> through runtime role reassignment after failures</li>
-<li><strong>Self-adaptation</strong> to target motion and changing spatial conditions</li>
-</ul>
-
-  </div>
-</div>
-
-
-
-
-
-
-<div class="deck-panel is-red">
-  <div class="deck-panel-label">CONTRIBUTION 02</div>
-  <h3 class="deck-panel-title">One model, multiple DPF organizations</h3>
-  <div class="deck-panel-body">
-    <ul>
-<li>neighborhood-level measurement aggregation</li>
-<li>leader-based fusion with dynamic leader election</li>
+<li>neighborhood measurement aggregation</li>
+<li>leader-based fusion with dynamic election</li>
 <li>decentralized estimation with fixed or mobile observers</li>
-<li>adaptive spatial participation and coordination regions</li>
+<li>adaptive spatial participation</li>
 </ul>
 
   </div>
@@ -471,7 +523,7 @@ The collection of local values forms the global computational field.</p>
 </div>
 
 <div class="meta-note">
-  The filtering logic remains constant; the collective reorganizes around it.
+  Architectural assumptions become composable choices that can evolve at runtime; the filtering logic stays constant while the collective reorganizes around it.
 </div>
 
 </section><section>
@@ -733,104 +785,43 @@ A new leader is elected; tracking resumes after a short transient.</p>
 </div>
 
 </section><section>
-<h1 id="the-same-formulation-enables-three-self--properties">The same formulation enables three self-* properties</h1>
-
-
-<div class="deck-grid deck-grid-3 outcome-grid">
-  
-
-
-
-
-<div class="deck-panel is-blue">
-  <div class="deck-panel-label">01</div>
-  <h3 class="deck-panel-title">Self-organization</h3>
-  <div class="deck-panel-body">
-    Neighborhood interactions improve estimation without central coordination.
+<h1 id="takeaways-and-future-work">Takeaways and Future Work</h1>
+<div class="closing-layout">
+  <div class="takeaway-editorial">
+    <h2>Takeaways</h2>
+    <div class="takeaway-line">
+      <span>01</span>
+      <p>Filtering stays standard — prediction, weighting, resampling, estimation — while <strong>coordination becomes a programmable design space</strong>.</p>
+    </div>
+    <div class="takeaway-line">
+      <span>02</span>
+      <p>One field-based formulation expresses several DPF organizations: neighborhood aggregation, leader-based fusion, and mobile observers.</p>
+    </div>
+    <div class="takeaway-line">
+      <span>03</span>
+      <p>Local measurement aggregation improves accuracy without exchanging particle sets; neighborhood size, connectivity, and spatial configuration shape estimation quality.</p>
+    </div>
+    <div class="takeaway-line is-critical">
+      <span>04</span>
+      <p><strong>Three self-* properties from one model:</strong> self-organization through local interaction, self-healing after leader failure, and self-adaptation of mobile observers.</p>
+    </div>
+  </div>
+  <div class="future-panel">
+    <h2>Future work</h2>
+    <div class="future-group">
+      <h3>Adaptive participation</h3>
+      <p>Spatially adaptive filtering with selective activation, and self-organizing coordination regions that form where evidence is informative.</p>
+    </div>
+    <div class="future-group">
+      <h3>Richer scenarios</h3>
+      <p>Larger target populations, heterogeneous sensing modalities, and more demanding deployment conditions.</p>
+    </div>
+    <div class="future-group">
+      <h3>Systematic trade-offs</h3>
+      <p>Characterizing estimation accuracy against communication cost, resilience, and scalability.</p>
+    </div>
   </div>
 </div>
-
-
-
-
-
-
-<div class="deck-panel is-red">
-  <div class="deck-panel-label">02</div>
-  <h3 class="deck-panel-title">Self-healing</h3>
-  <div class="deck-panel-body">
-    A failed fusion leader is replaced at runtime while the collective behavior persists.
-  </div>
-</div>
-
-
-
-
-
-
-<div class="deck-panel is-blue">
-  <div class="deck-panel-label">03</div>
-  <h3 class="deck-panel-title">Self-adaptation</h3>
-  <div class="deck-panel-body">
-    Mobile observers reorganize as the tracked targets move.
-  </div>
-</div>
-
-
-</div>
-
-<div class="meta-note">
-  The key result is not one DPF configuration, but multiple adaptive organizations emerging from one field-based formulation.
-</div>
-
-</section><section>
-<h1 id="field-based-dpf-separates-estimation-from-coordination">Field-based DPF separates estimation from coordination</h1>
-
-
-<div class="deck-grid deck-grid-2 closing-grid">
-  
-
-
-
-
-<div class="deck-panel is-blue">
-  <div class="deck-panel-label">TAKEAWAYS</div>
-  <h3 class="deck-panel-title">What the work establishes</h3>
-  <div class="deck-panel-body">
-    <ul>
-<li>DPF becomes a <strong>self-organizing collective process</strong>.</li>
-<li>One estimation substrate supports multiple organizations.</li>
-<li>Local cooperation, leader replacement, and mobile observers expose three self-* properties.</li>
-<li>Neighborhood size, connectivity, and spatial configuration shape estimation quality.</li>
-</ul>
-
-  </div>
-</div>
-
-
-
-
-
-
-<div class="deck-panel is-red">
-  <div class="deck-panel-label">NEXT</div>
-  <h3 class="deck-panel-title">Future work</h3>
-  <div class="deck-panel-body">
-    <ul>
-<li>spatially adaptive filtering and selective activation</li>
-<li>self-organizing coordination regions</li>
-<li>larger target populations</li>
-<li>richer deployment conditions</li>
-<li>heterogeneous sensing modalities</li>
-<li>accuracy, communication, resilience, and scalability trade-offs</li>
-</ul>
-
-  </div>
-</div>
-
-
-</div>
-
 </section><section>
 <h1 id="thank-you-for-the-attention">Thank you for the attention!</h1>
 
