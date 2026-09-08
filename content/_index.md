@@ -196,11 +196,11 @@ The model does not require global lockstep.
 
 ---
 
-# Keep particle filtering standard; make coordination adaptable
+# Keep filtering standard; make coordination adaptable
 
-<p class="lead-line">This is not another DPF algorithm. It is a programmable coordination layer around established filtering logic.</p>
+<p class="lead-line">This is not another DPF algorithm. It is a programmable coordination layer that turns DPF into a <strong>self-organizing collective process</strong>.</p>
 
-{{< deck-grid columns="2" class="idea-grid" >}}
+{{< deck-grid columns="3" class="idea-grid" >}}
 {{< deck-panel label="STABLE" title="Filtering logic" >}}
 - prediction
 - weighting
@@ -210,38 +210,22 @@ The model does not require global lockstep.
 
 {{< deck-panel label="PROGRAMMABLE" title="Coordination choices" tone="red" >}}
 - where information is fused;
-- what information is exchanged;
-- how far information propagates;
+- what is exchanged;
+- how far it propagates;
 - which devices participate;
 - which devices take coordination roles.
 {{< /deck-panel >}}
-{{< /deck-grid >}}
 
-{{< meta-note >}}
-Architectural assumptions become composable choices that can evolve at runtime.
-{{< /meta-note >}}
-
----
-
-# One field-based model supports multiple adaptive organizations
-
-{{< deck-grid columns="2" class="contribution-grid" >}}
-{{< deck-panel label="CONTRIBUTION 01" title="DPF as a self-organizing collective process" >}}
-- **Self-organization** through local neighborhood interactions
-- **Self-healing** through runtime role reassignment after failures
-- **Self-adaptation** to target motion and changing spatial conditions
-{{< /deck-panel >}}
-
-{{< deck-panel label="CONTRIBUTION 02" title="One model, multiple DPF organizations" tone="red" >}}
-- neighborhood-level measurement aggregation
-- leader-based fusion with dynamic leader election
+{{< deck-panel label="RESULT" title="One model, many organizations" >}}
+- neighborhood measurement aggregation
+- leader-based fusion with dynamic election
 - decentralized estimation with fixed or mobile observers
-- adaptive spatial participation and coordination regions
+- adaptive spatial participation
 {{< /deck-panel >}}
 {{< /deck-grid >}}
 
 {{< meta-note >}}
-The filtering logic remains constant; the collective reorganizes around it.
+Architectural assumptions become composable choices that can evolve at runtime; the filtering logic stays constant while the collective reorganizes around it.
 {{< /meta-note >}}
 
 ---
