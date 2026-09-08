@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/reveal-js/dist/reset.css">
 <link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/reveal-js/dist/reveal.css">
-  <link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/css/custom-theme.min.5281209e96df0ac57fece5622559117a0c4987e1b097e1feecd43a8c3bf7cbb8.css" id="theme"><link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/highlight-js/solarized-dark.min.css">
+  <link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/css/custom-theme.min.b303001e4664ddad1dc3197555f20f9b2dcc351132c08a10d196223e047bbff2.css" id="theme"><link rel="stylesheet" href="/presentation-2026-acsos-field-based-dpf/highlight-js/solarized-dark.min.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Oxygen Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu Mono" rel="stylesheet">
@@ -506,7 +506,7 @@ The collection of local values forms the global computational field.</p>
     </div>
   </div>
 </div>
-<img alt="Experimental setup" src="./images/dpf.gif" width="30%">
+<img alt="Experimental setup" src="./images/dpf-cropped.gif" class="eval-gif">
 </section><section>
 <h1 id="experiment-1-neighborhood-sharing-improves-local-estimates">Experiment 1: neighborhood sharing improves local estimates</h1>
 
@@ -675,7 +675,7 @@ A new leader is elected; tracking resumes after a short transient.</p>
 <li>Sensors preserve a grid-like formation.</li>
 <li>The formation centroid follows the estimated target centroid.</li>
 </ul>
-<p>Keeping sensors near the targets produces more informative measurements and lower estimation error.</p>
+<p>Observation quality then depends on how well the formation keeps up.</p>
   </div>
 </div>
 
@@ -690,6 +690,46 @@ A new leader is elected; tracking resumes after a short transient.</p>
 </figure>
 
 
+</div>
+
+</section><section>
+<h1 id="tracking-accuracy-bounds-estimation-accuracy">Tracking accuracy bounds estimation accuracy</h1>
+
+
+<div class="deck-grid deck-grid-2 results-grid">
+  
+
+
+
+
+<figure class="deck-figure results-figure tracking-error-figure">
+  <img src="./images/rmse_by_error_on_position.png" alt="RMSE as a function of the tracking error of the moving sensors">
+  <figcaption>Estimation error vs. tracking error of the mobile sensors.</figcaption>
+</figure>
+
+
+
+
+
+
+<div class="deck-panel is-blue">
+  <div class="deck-panel-label">RESULT</div>
+  <h3 class="deck-panel-title">Mobility helps only while the formation keeps up</h3>
+  <div class="deck-panel-body">
+    <ul>
+<li><strong>Tracking error</strong>: how far the sensors stay from the position they follow.</li>
+<li>RMSE grows <strong>super-linearly</strong>: 2 m at 0, ~26 m at 200, ~59 m at 300.</li>
+<li>Sensors that lag behind receive a weaker, noisier signal.</li>
+</ul>
+
+  </div>
+</div>
+
+
+</div>
+
+<div class="meta-note">
+  Mobility buys accuracy only in proportion to how well the collective keeps up.
 </div>
 
 </section><section>
