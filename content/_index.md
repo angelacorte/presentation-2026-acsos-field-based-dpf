@@ -279,7 +279,7 @@ The filtering logic remains constant; the collective reorganizes around it.
   </div>
 </div>
 
-<img alt="Experimental setup" src="./images/dpf.gif" width="30%">
+<img alt="Experimental setup" src="./images/dpf-cropped.gif" class="eval-gif">
 
 ---
 
@@ -366,11 +366,29 @@ The fusion-center role persists even when the device holding that role does not.
 - Sensors preserve a grid-like formation.
 - The formation centroid follows the estimated target centroid.
 
-Keeping sensors near the targets produces more informative measurements and lower estimation error.
+Observation quality then depends on how well the formation keeps up.
 {{< /deck-panel >}}
 
 {{< deck-figure src="./images/sensors_zebras_movement.png" alt="Mobile sensors reorganizing around three moving targets" class="mobile-figure" >}}
 {{< /deck-grid >}}
+
+---
+
+# Tracking accuracy bounds estimation accuracy
+
+{{< deck-grid columns="2" class="results-grid" >}}
+{{< deck-figure src="./images/rmse_by_error_on_position.png" alt="RMSE as a function of the tracking error of the moving sensors" caption="Estimation error vs. tracking error of the mobile sensors." class="results-figure tracking-error-figure" >}}
+
+{{< deck-panel label="RESULT" title="Mobility helps only while the formation keeps up" >}}
+- **Tracking error**: how far the sensors stay from the position they follow.
+- RMSE grows **super-linearly**: 2 m at 0, ~26 m at 200, ~59 m at 300.
+- Sensors that lag behind receive a weaker, noisier signal.
+{{< /deck-panel >}}
+{{< /deck-grid >}}
+
+{{< meta-note >}}
+Mobility buys accuracy only in proportion to how well the collective keeps up.
+{{< /meta-note >}}
 
 ---
 

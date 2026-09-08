@@ -1559,6 +1559,12 @@ html.blur-animation-light .backgrounds {
   font-weight: 700;
 }
 
+.reveal .eval-gif {
+  display: block;
+  width: 33%;
+  margin: 0.4rem auto 0;
+}
+
 .reveal .eval-layout {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
@@ -2496,13 +2502,17 @@ html.blur-animation-light .backgrounds {
 }
 
 .reveal .results-figure img {
-  max-height: 18rem;
+  max-height: 38rem;
+}
+
+.reveal .tracking-error-figure img {
+  max-height: 34rem;
 }
 
 .reveal .wide-results-figure img {
-  width: 108%;
-  max-width: 108%;
-  max-height: 21rem;
+  width: auto;
+  max-width: 100%;
+  max-height: 30rem;
 }
 
 .reveal .experiment-grid {
@@ -2510,11 +2520,11 @@ html.blur-animation-light .backgrounds {
 }
 
 .reveal .experiment-figure img {
-  max-height: 24rem;
+  max-height: 48rem;
 }
 
 .reveal .mobile-figure img {
-  max-height: 24rem;
+  max-height: 48rem;
 }
 
 .reveal .outcome-grid {
