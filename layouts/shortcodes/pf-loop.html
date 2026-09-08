@@ -1,0 +1,82 @@
+<div class="pf-loop" aria-label="One particle-filter iteration: predict, weight, resample, estimate">
+<svg viewBox="0 0 600 352" class="pf-loop-svg" role="img">
+  <defs>
+    <marker id="pfArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" class="pf-loop-arrowhead"></path>
+    </marker>
+    <marker id="pfArrowInit" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" class="pf-loop-arrowhead-init"></path>
+    </marker>
+    <marker id="pfArrowReturn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" class="pf-loop-arrowhead-return"></path>
+    </marker>
+  </defs>
+
+  <!-- 01 PREDICT : previous particles move through the dynamics and spread -->
+  <text x="14" y="52" class="pf-loop-step"><tspan class="pf-loop-num">01</tspan> Predict</text>
+  <text x="14" y="68" class="pf-loop-substep">t − 1 → t</text>
+  <text x="172" y="18" class="pf-loop-init-label">initial belief · t = 0</text>
+  <line x1="176" y1="30" x2="200" y2="34" class="pf-loop-init" marker-end="url(#pfArrowInit)"></line>
+  <g class="pf-loop-ghosts">
+    <circle cx="214" cy="36" r="5.5"></circle><circle cx="246" cy="36" r="5.5"></circle>
+    <circle cx="274" cy="36" r="5.5"></circle><circle cx="300" cy="36" r="5.5"></circle>
+    <circle cx="328" cy="36" r="5.5"></circle><circle cx="358" cy="36" r="5.5"></circle>
+  </g>
+  <g class="pf-loop-shift">
+    <line x1="216" y1="44" x2="232" y2="54" marker-end="url(#pfArrow)"></line>
+    <line x1="248" y1="44" x2="268" y2="54" marker-end="url(#pfArrow)"></line>
+    <line x1="276" y1="44" x2="300" y2="54" marker-end="url(#pfArrow)"></line>
+    <line x1="302" y1="44" x2="332" y2="54" marker-end="url(#pfArrow)"></line>
+    <line x1="330" y1="44" x2="364" y2="54" marker-end="url(#pfArrow)"></line>
+    <line x1="360" y1="44" x2="400" y2="54" marker-end="url(#pfArrow)"></line>
+  </g>
+  <line x1="168" y1="64" x2="500" y2="64" class="pf-loop-axis"></line>
+  <g class="pf-loop-particles">
+    <circle cx="236" cy="64" r="7.5"></circle><circle cx="272" cy="64" r="7.5"></circle>
+    <circle cx="304" cy="64" r="7.5"></circle><circle cx="336" cy="64" r="7.5"></circle>
+    <circle cx="368" cy="64" r="7.5"></circle><circle cx="404" cy="64" r="7.5"></circle>
+  </g>
+
+  <!-- 02 WEIGHT : size proportional to agreement with the observation -->
+  <text x="14" y="150" class="pf-loop-step"><tspan class="pf-loop-num">02</tspan> Weight</text>
+  <path d="M 226 146 C 276 146, 290 118, 318 118 C 346 118, 360 146, 410 146" class="pf-loop-likelihood"></path>
+  <line x1="168" y1="146" x2="500" y2="146" class="pf-loop-axis"></line>
+  <line x1="318" y1="115" x2="318" y2="166" class="pf-loop-obs"></line>
+  <text x="318" y="107" class="pf-loop-obs-label">observation</text>
+  <g class="pf-loop-particles">
+    <circle cx="236" cy="146" r="5"></circle><circle cx="272" cy="146" r="9"></circle>
+    <circle cx="304" cy="146" r="15"></circle><circle cx="336" cy="146" r="13"></circle>
+    <circle cx="368" cy="146" r="8"></circle><circle cx="404" cy="146" r="4.5"></circle>
+  </g>
+
+  <!-- 03 RESAMPLE : equal weights, replicated where the evidence was strong -->
+  <text x="14" y="226" class="pf-loop-step"><tspan class="pf-loop-num">03</tspan> Resample</text>
+  <line x1="168" y1="222" x2="500" y2="222" class="pf-loop-axis"></line>
+  <g class="pf-loop-particles">
+    <circle cx="288" cy="215" r="8"></circle><circle cx="302" cy="229" r="8"></circle>
+    <circle cx="310" cy="215" r="8"></circle><circle cx="320" cy="230" r="8"></circle>
+    <circle cx="330" cy="215" r="8"></circle><circle cx="344" cy="228" r="8"></circle>
+  </g>
+
+  <!-- 04 ESTIMATE : the cloud summarised, spread kept explicit -->
+  <text x="14" y="296" class="pf-loop-step"><tspan class="pf-loop-num">04</tspan> Estimate</text>
+  <line x1="168" y1="292" x2="500" y2="292" class="pf-loop-axis"></line>
+  <g class="pf-loop-particles pf-loop-particles-faded">
+    <circle cx="288" cy="286" r="7"></circle><circle cx="302" cy="298" r="7"></circle>
+    <circle cx="310" cy="286" r="7"></circle><circle cx="320" cy="299" r="7"></circle>
+    <circle cx="330" cy="286" r="7"></circle><circle cx="344" cy="297" r="7"></circle>
+  </g>
+  <g class="pf-loop-spread">
+    <line x1="280" y1="318" x2="352" y2="318"></line>
+    <line x1="280" y1="312" x2="280" y2="324"></line>
+    <line x1="352" y1="312" x2="352" y2="324"></line>
+  </g>
+  <text x="362" y="322" class="pf-loop-note">spread = uncertainty</text>
+  <path d="M 316 282 L 323 292 L 316 302 L 309 292 z" class="pf-loop-estimate"></path>
+  <text x="316" y="272" class="pf-loop-estimate-label">estimate</text>
+
+  <!-- recursion -->
+  <path d="M 508 292 C 558 292, 558 64, 512 64" class="pf-loop-return" marker-end="url(#pfArrowReturn)"></path>
+  <text x="0" y="0" class="pf-loop-return-label" transform="translate(580 178) rotate(-90)">next round</text>
+</svg>
+</div>

@@ -61,9 +61,9 @@ But the sensing system changes too:
 **04 · Estimate** — Use the particles to represent the current belief.
 {{< /deck-panel >}}
 
-<div class="pf-visual">
-<img src="./images/particles-distribution/step_0.png">
-<p><strong>The estimate is a distribution, not only a point.</strong></p>
+<div class="pf-visual pf-loop-visual">
+{{< pf-loop >}}
+<p><strong>One iteration: the belief is transformed, never collapsed to a point.</strong></p>
 </div>
 
 {{< /deck-grid >}}
@@ -376,47 +376,45 @@ Mobility buys accuracy only in proportion to how well the collective keeps up.
 
 ---
 
-# The same formulation enables three self-* properties
+# Takeaways and Future Work
 
-{{< deck-grid columns="3" class="outcome-grid" >}}
-{{< deck-panel label="01" title="Self-organization" >}}
-Neighborhood interactions improve estimation without central coordination.
-{{< /deck-panel >}}
+<div class="closing-layout">
+  <div class="takeaway-editorial">
+    <h2>Takeaways</h2>
+    <div class="takeaway-line">
+      <span>01</span>
+      <p>Filtering stays standard — prediction, weighting, resampling, estimation — while <strong>coordination becomes a programmable design space</strong>.</p>
+    </div>
+    <div class="takeaway-line">
+      <span>02</span>
+      <p>One field-based formulation expresses several DPF organizations: neighborhood aggregation, leader-based fusion, and mobile observers.</p>
+    </div>
+    <div class="takeaway-line">
+      <span>03</span>
+      <p>Local measurement aggregation improves accuracy without exchanging particle sets; neighborhood size, connectivity, and spatial configuration shape estimation quality.</p>
+    </div>
+    <div class="takeaway-line is-critical">
+      <span>04</span>
+      <p><strong>Three self-* properties from one model:</strong> self-organization through local interaction, self-healing after leader failure, and self-adaptation of mobile observers.</p>
+    </div>
+  </div>
 
-{{< deck-panel label="02" title="Self-healing" tone="red" >}}
-A failed fusion leader is replaced at runtime while the collective behavior persists.
-{{< /deck-panel >}}
-
-{{< deck-panel label="03" title="Self-adaptation" >}}
-Mobile observers reorganize as the tracked targets move.
-{{< /deck-panel >}}
-{{< /deck-grid >}}
-
-{{< meta-note >}}
-The key result is not one DPF configuration, but multiple adaptive organizations emerging from one field-based formulation.
-{{< /meta-note >}}
-
----
-
-# Field-based DPF separates estimation from coordination
-
-{{< deck-grid columns="2" class="closing-grid" >}}
-{{< deck-panel label="TAKEAWAYS" title="What the work establishes" >}}
-- DPF becomes a **self-organizing collective process**.
-- One estimation substrate supports multiple organizations.
-- Local cooperation, leader replacement, and mobile observers expose three self-* properties.
-- Neighborhood size, connectivity, and spatial configuration shape estimation quality.
-{{< /deck-panel >}}
-
-{{< deck-panel label="NEXT" title="Future work" tone="red" >}}
-- spatially adaptive filtering and selective activation
-- self-organizing coordination regions
-- larger target populations
-- richer deployment conditions
-- heterogeneous sensing modalities
-- accuracy, communication, resilience, and scalability trade-offs
-{{< /deck-panel >}}
-{{< /deck-grid >}}
+  <div class="future-panel">
+    <h2>Future work</h2>
+    <div class="future-group">
+      <h3>Adaptive participation</h3>
+      <p>Spatially adaptive filtering with selective activation, and self-organizing coordination regions that form where evidence is informative.</p>
+    </div>
+    <div class="future-group">
+      <h3>Richer scenarios</h3>
+      <p>Larger target populations, heterogeneous sensing modalities, and more demanding deployment conditions.</p>
+    </div>
+    <div class="future-group">
+      <h3>Systematic trade-offs</h3>
+      <p>Characterizing estimation accuracy against communication cost, resilience, and scalability.</p>
+    </div>
+  </div>
+</div>
 
 ---
 

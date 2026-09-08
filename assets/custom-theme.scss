@@ -1698,6 +1698,136 @@ html.blur-animation-light .backgrounds {
   line-height: 1.16;
 }
 
+// Particle-filter iteration diagram (slide 3)
+
+.reveal .pf-loop {
+  width: 100%;
+  margin: 0.2rem auto 0;
+}
+
+.reveal .pf-loop-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.reveal .pf-loop-step {
+  fill: $deepBlue;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.reveal .pf-loop-num {
+  fill: $accentBlue;
+}
+
+.reveal .pf-loop-init-label {
+  fill: $mutedInk;
+  font-size: 11px;
+  font-style: italic;
+}
+
+.reveal .pf-loop-init {
+  stroke: rgba(82, 97, 109, 0.7);
+  stroke-width: 1.4;
+}
+
+.reveal .pf-loop-arrowhead-init {
+  fill: rgba(82, 97, 109, 0.7);
+}
+
+.reveal .pf-loop-substep {
+  fill: $mutedInk;
+  font-size: 11.5px;
+}
+
+.reveal .pf-loop-axis {
+  stroke: rgba(6, 63, 114, 0.22);
+  stroke-width: 1.4;
+}
+
+.reveal .pf-loop-particles circle {
+  fill: rgba(57, 167, 238, 0.62);
+  stroke: $deepBlue;
+  stroke-width: 1.3;
+}
+
+.reveal .pf-loop-particles-faded circle {
+  fill: rgba(57, 167, 238, 0.3);
+  stroke: rgba(6, 63, 114, 0.45);
+}
+
+.reveal .pf-loop-ghosts circle {
+  fill: none;
+  stroke: rgba(6, 63, 114, 0.3);
+  stroke-width: 1.2;
+  stroke-dasharray: 2.5 2.5;
+}
+
+.reveal .pf-loop-shift line {
+  stroke: rgba(6, 63, 114, 0.55);
+  stroke-width: 1.3;
+}
+
+.reveal .pf-loop-arrowhead {
+  fill: rgba(6, 63, 114, 0.55);
+}
+
+.reveal .pf-loop-likelihood {
+  fill: none;
+  stroke: $accentBlue;
+  stroke-width: 1.6;
+  opacity: 0.45;
+}
+
+.reveal .pf-loop-obs {
+  stroke: $uniboRed;
+  stroke-width: 1.6;
+  stroke-dasharray: 4 3;
+}
+
+.reveal .pf-loop-obs-label,
+.reveal .pf-loop-estimate-label {
+  fill: $uniboRed;
+  font-size: 12px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.reveal .pf-loop-estimate {
+  fill: $uniboRed;
+}
+
+.reveal .pf-loop-spread line {
+  stroke: $deepBlue;
+  stroke-width: 1.5;
+}
+
+.reveal .pf-loop-note {
+  fill: $mutedInk;
+  font-size: 11.5px;
+}
+
+.reveal .pf-loop-return {
+  fill: none;
+  stroke: rgba(6, 63, 114, 0.38);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+
+.reveal .pf-loop-arrowhead-return {
+  fill: rgba(6, 63, 114, 0.55);
+}
+
+.reveal .pf-loop-return-label {
+  fill: $mutedInk;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-anchor: middle;
+  letter-spacing: 0.04em;
+}
+
 // Coherent editorial layouts for the whole deck
 
 .reveal .lead-line {
