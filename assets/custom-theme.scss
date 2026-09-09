@@ -2752,3 +2752,43 @@ html.blur-animation-light .backgrounds {
   color: white;
   background: $deepBlue;
 }
+
+/* ---- Funding / acknowledgements note (FoMaSE) ---- */
+.reveal .funding-note {
+  margin: 1.1rem auto 0;
+  max-width: 82%;
+  font-size: 0.42em;
+  line-height: 1.35;
+  text-align: center;
+  color: #0e2231;
+  opacity: 0.85;
+}
+
+.reveal .funding-note strong {
+  color: $uniboRed;
+  font-weight: 600;
+}
+
+.reveal .funding-note-closing {
+  margin-top: 1.4rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(14, 34, 49, 0.18);
+}
+
+.reveal .funding-note-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.85em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: $uniboRed;
+}
+
+.reveal section:not(.has-light-background) .funding-note {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.reveal section:not(.has-light-background) .funding-note-closing {
+  border-top-color: rgba(255, 255, 255, 0.22);
+}

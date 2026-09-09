@@ -23,6 +23,10 @@ Alma Mater Studiorum — University of Bologna, Cesena, Italy*</span>
   <img src="./images/DIP INFORMATICA-SCIENZA E INGEGNERIA_DISI_EN.svg" alt="University of Bologna — DISI">
 </div>
 
+<div class="funding-note">
+This work contributes to the research agenda of the Italian Science Fund (FIS3) Starting Grant project <strong>FoMaSE &ndash; Foundations for Macro-programming-based Software Engineering</strong> (Grant No. FIS-2024-00174, CUP J53C25002170001).
+</div>
+
 ---
 
 # Motivation: distributed estimation in changing environments
@@ -427,3 +431,10 @@ Mobility buys accuracy only in proportion to how well the collective keeps up.
 {{< deck-figure src="./images/qrcode.png" alt="QR code for the experiment repository" class="qr-figure" >}}
 
 GitHub: <i class="fa-brands fa-github"></i> **[domm99/experiments-acsos-2026-DPF-multi-object-tracking](https://github.com/domm99/experiments-acsos-2026-DPF-multi-object-tracking)**
+
+{{% spacer %}}
+
+<div class="funding-note funding-note-closing">
+<span class="funding-note-label">Acknowledgements</span>
+This work contributes to the research agenda of the Italian Science Fund (FIS3) Starting Grant project <strong>FoMaSE &ndash; Foundations for Macro-programming-based Software Engineering</strong> (Grant No. FIS-2024-00174, CUP J53C25002170001).
+</div>
