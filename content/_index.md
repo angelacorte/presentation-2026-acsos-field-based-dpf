@@ -318,7 +318,7 @@ Local cooperation supports decentralized multi-target tracking without a fusion 
 
 ---
 
-# Experiment 2: the fusion role survives leader failure
+# Experiment 2: Self-Healing Fusion Center
 
 {{< deck-grid columns="2" class="experiment-grid" >}}
 {{< deck-panel label="SELF-HEALING SEQUENCE" title="Elect, fuse, fail, recover" class="numbered-panel" >}}
